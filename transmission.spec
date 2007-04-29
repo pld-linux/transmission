@@ -1,4 +1,5 @@
 Summary:	A versatile and multi-platform BitTorrent client
+Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		Transmission
 Version:	0.71
 Release:	1
@@ -22,6 +23,13 @@ yet powerful BitTorrent client. Its simple, intuitive interface is
 designed to integrate tightly with whatever computing environment you
 choose to use. Transmission strikes a balance between providing useful
 functionality without feature bloat.
+
+%description -l pl.UTF-8
+Transmission został stworzony od podstaw, aby być lekkim lecz mającym
+duże możliwości klientem BitTorrenta. Jego prosty, intuicyjny
+interfejs jest zaprojektowany spójnie z dowolnym środowiskiem wybranym
+przez użytkownika. Transmission stawia na równowagę zapewnienia
+przydatnej funkcjonalności bez nadmiaru opcji.
 
 %prep
 %setup -q
