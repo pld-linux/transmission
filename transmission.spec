@@ -1,15 +1,16 @@
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		Transmission
-Version:	0.71
+Version:	0.72
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.gz
-# Source0-md5:	2df675d20175f0a73d0c470f428018f8
+# Source0-md5:	4b0746b71612a2ac9ca7f145855967e3
 URL:		http://transmission.m0k.org/
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	intltool >= 0.35.5
+BuildRequires:	libevent-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
@@ -44,6 +45,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+mv $RPM_BUILD_ROOT/usr{,/share}/man
+
 %find_lang %{name} --all-name --with-gnome
 
 %clean
@@ -59,6 +62,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
 %attr(755,root,root) %{_bindir}/transmissioncli
+%attr(755,root,root) %{_bindir}/transmission-daemon
 %attr(755,root,root) %{_bindir}/transmission-gtk
+%attr(755,root,root) %{_bindir}/transmission-proxy
+%attr(755,root,root) %{_bindir}/transmission-remote
+%{_mandir}/man1/*.1.gz
 %{_desktopdir}/transmission-gtk.desktop
 %{_pixmapsdir}/transmission.png
