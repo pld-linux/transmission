@@ -66,6 +66,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/transmission-gtk
 %attr(755,root,root) %{_bindir}/transmission-proxy
 %attr(755,root,root) %{_bindir}/transmission-remote
-%{_mandir}/man1/*.1.gz
+%{_mandir}/man1/*.1*
 %{_desktopdir}/transmission-gtk.desktop
 %{_pixmapsdir}/transmission.png
