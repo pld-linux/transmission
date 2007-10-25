@@ -1,12 +1,12 @@
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		Transmission
-Version:	0.82
+Version:	0.90
 Release:	1
 License:	MIT
 Group:		Applications/Communications
-Source0:	http://download.m0k.org/transmission/files/transmission-%{version}.tar.gz
-# Source0-md5:	ddc7842b4c8f7882d90dcf874019ccdc
+Source0:	http://download.m0k.org/transmission/files/transmission-%{version}.tar.bz2
+# Source0-md5:	faebea05e9fc2e5d6c0615037657fd8f
 URL:		http://transmission.m0k.org/
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	intltool >= 0.35.5
@@ -34,6 +34,7 @@ przydatnej funkcjonalności bez nadmiaru opcji.
 
 %prep
 %setup -q -c -n transmission-%{version}
+mv transmission-%{version}/* .
 
 %build
 %configure
@@ -45,7 +46,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv $RPM_BUILD_ROOT/usr{,/share}/man
+#mv $RPM_BUILD_ROOT/usr{,/share}/man
 
 %find_lang %{name} --all-name --with-gnome
 
@@ -61,11 +62,11 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
-%attr(755,root,root) %{_bindir}/transmissioncli
+%attr(755,root,root) %{_bindir}/transmission
+%attr(755,root,root) %{_bindir}/transmission-cli
 %attr(755,root,root) %{_bindir}/transmission-daemon
-%attr(755,root,root) %{_bindir}/transmission-gtk
 %attr(755,root,root) %{_bindir}/transmission-proxy
 %attr(755,root,root) %{_bindir}/transmission-remote
-%{_mandir}/man1/*.1*
-%{_desktopdir}/transmission-gtk.desktop
+#%{_mandir}/man1/*.1*
+%{_desktopdir}/transmission.desktop
 %{_pixmapsdir}/transmission.png
