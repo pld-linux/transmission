@@ -1,12 +1,12 @@
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		Transmission
-Version:	1.04
+Version:	1.05
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/transmission-%{version}.tar.bz2
-# Source0-md5:	7234c2e7c9855ea62768f89196f5913f
+# Source0-md5:	3baf5be0d4fe2a0e0e0e43b7b0fe5dcb
 URL:		http://transmission.m0k.org/
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	intltool >= 0.35.5
@@ -14,6 +14,7 @@ BuildRequires:	libevent-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
+Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	gtk+2
 Requires:	gtk+2 >= 2:2.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -55,9 +56,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %update_desktop_database_post
+%update_icon_cache hicolor
 
 %postun
 %update_desktop_database_postun
+%update_icon_cache hicolor
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -70,3 +73,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*.1*
 %{_desktopdir}/transmission.desktop
 %{_pixmapsdir}/transmission.png
+%{_iconsdir}/hicolor/*/apps/transmission.png
+%{_iconsdir}/hicolor/*/apps/transmission.svg
