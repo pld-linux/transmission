@@ -17,6 +17,7 @@ BuildRequires:	rpmbuild(macros) >= 1.357
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	gtk+2
 Requires:	gtk+2 >= 2:2.6.0
+Obsoletes:	Transmission <= 1.05
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
