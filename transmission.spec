@@ -1,3 +1,4 @@
+# TODO: use system libevent
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
@@ -8,13 +9,15 @@ Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/transmission-%{version}.tar.bz2
 # Source0-md5:	aa0a2db19b0f3dbfd75a0fb354d6c47d
 URL:		http://transmission.m0k.org/
-BuildRequires:	curl-devel
+BuildRequires:	curl-devel >= 7.15.0
+BuildRequires:	dbus-glib-devel >= 0.70
+BuildRequires:	glib2-devel >= 1:2.16.0
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	intltool >= 0.35.5
-BuildRequires:	libevent-devel
-BuildRequires:	openssl-devel
+#BuildRequires:	libevent-devel
+BuildRequires:	libnotify-devel >= 0.4.4
+BuildRequires:	openssl-devel >= 0.9.4
 BuildRequires:	pkgconfig
-BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(macros) >= 1.357
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	gtk+2
@@ -49,8 +52,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-#mv $RPM_BUILD_ROOT/usr{,/share}/man
 
 %find_lang %{name} --all-name --with-gnome
 
