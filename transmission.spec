@@ -69,11 +69,9 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
-%attr(755,root,root) %{_bindir}/benc2php
 %attr(755,root,root) %{_bindir}/transmission
 %attr(755,root,root) %{_bindir}/transmissioncli
 %attr(755,root,root) %{_bindir}/transmission-daemon
-%attr(755,root,root) %{_bindir}/transmission-proxy
 %attr(755,root,root) %{_bindir}/transmission-remote
 %{_mandir}/man1/*.1*
 %{_desktopdir}/transmission.desktop
