@@ -2,12 +2,12 @@
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	1.22
+Version:	1.32
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/transmission-%{version}.tar.bz2
-# Source0-md5:	aa0a2db19b0f3dbfd75a0fb354d6c47d
+# Source0-md5:	2525872f5c95886243f83ed513e3952b
 URL:		http://transmission.m0k.org/
 BuildRequires:	curl-devel >= 7.15.0
 BuildRequires:	dbus-glib-devel >= 0.70
