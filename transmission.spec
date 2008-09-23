@@ -80,6 +80,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pixmapsdir}/transmission.png
 %{_iconsdir}/hicolor/*/apps/transmission.png
 %{_iconsdir}/hicolor/*/apps/transmission.svg
+%dir %{_appdir}
 %{_appdir}/images
 %{_appdir}/javascript
 %{_appdir}/stylesheets
