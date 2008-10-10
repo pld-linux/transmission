@@ -1,0 +1,11 @@
+diff -burNp transmission-1.34/po/LINGUAS transmission-1.34-new/po/LINGUAS
+--- transmission-1.34/po/LINGUAS	2008-09-17 03:37:42.000000000 +0200
++++ transmission-1.34-new/po/LINGUAS	2008-10-10 21:04:13.209762100 +0200
+@@ -2,7 +2,6 @@
+ ar
+ bg
+ ca
+-ckb
+ cs
+ da
+ de
