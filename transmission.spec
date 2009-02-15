@@ -2,14 +2,14 @@
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	1.42
+Version:	1.50
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/transmission-%{version}.tar.bz2
-# Source0-md5:	c083bdcb01426466e80ee339bccd9351
+# Source0-md5:	9342004249f09d5e8f87f9bd1476fa53
 Patch0:		%{name}-ckb_po.patch
-URL:		http://transmission.m0k.org/
+URL:		http://transmissionbt.com/
 BuildRequires:	curl-devel >= 7.15.0
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	glib2-devel >= 1:2.16.0
@@ -46,7 +46,7 @@ przydatnej funkcjonalności bez nadmiaru opcji.
 %setup -q -c -n transmission-%{version}
 mv transmission-%{version}/* .
 %patch0 -p1
-rm -f po/ckb.po
+%{__rm} po/ckb.po
 
 %build
 %configure
@@ -59,6 +59,12 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %find_lang %{name} --all-name --with-gnome
+
+# unsupported
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/eu
+
+# copy of GPLv2 not needed
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/transmission/web/LICENSE
 
 %clean
 rm -rf $RPM_BUILD_ROOT
