@@ -1,12 +1,13 @@
 # TODO: use system libevent
 Summary:	A versatile and multi-platform BitTorrent client
+Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	1.51
 Release:	1
 License:	MIT
 Group:		Applications/Communications
-Source0:	http://download.m0k.org/transmission/files/transmission-%{version}.tar.bz2
+Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
 # Source0-md5:	fb0e3893eb565eeb7ca32a63e4c73032
 Patch0:		%{name}-ckb_po.patch
 URL:		http://transmissionbt.com/
@@ -34,6 +35,12 @@ yet powerful BitTorrent client. Its simple, intuitive interface is
 designed to integrate tightly with whatever computing environment you
 choose to use. Transmission strikes a balance between providing useful
 functionality without feature bloat.
+
+%description -l hu.UTF-8
+Transmission egy könnyűsúlyú de mégis egy erőteljes BitTorrent kliens.
+Egyszerű, intuitív felülete szorosan illeszkedik bármilyen
+számítógépes környezetbe, amit csak választasz. A Transmission célja
+megtalálni a használható funkcionalitást lehetőségek áradata nélkül.
 
 %description -l pl.UTF-8
 Transmission został stworzony od podstaw, aby być lekkim lecz mającym
