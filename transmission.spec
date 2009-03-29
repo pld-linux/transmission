@@ -127,6 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/index.html
 
 %files gui
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/transmission
 %{_desktopdir}/transmission.desktop
 %{_pixmapsdir}/transmission.png
