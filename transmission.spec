@@ -23,8 +23,8 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel >= 0.9.4
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	Transmission <= 1.05
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdir		%{_datadir}/%{name}/web
 
