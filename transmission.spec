@@ -4,7 +4,7 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	1.52
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
@@ -54,8 +54,8 @@ Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Group:		X11/Applications/Communications
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	gtk+2
+Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2 >= 2:2.6.0
-Requires:	%{name}-%{version}-%{release}
 
 %description gui
 Transmission has been built from the ground up to be a lightweight,
