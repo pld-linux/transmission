@@ -4,7 +4,7 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	1.52
-Release:	2
+Release:	3
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
@@ -118,7 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/transmissioncli
 %attr(755,root,root) %{_bindir}/transmission-daemon
 %attr(755,root,root) %{_bindir}/transmission-remote
-%{_mandir}/man1/*.1*
+%{_mandir}/man1/transmissioncli.1*
+%{_mandir}/man1/transmission-daemon.1*
+%{_mandir}/man1/transmission-remote.1*
 %dir %{_datadir}/%{name}
 %dir %{_appdir}
 %{_appdir}/images
@@ -129,6 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 %files gui
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/transmission
+%{_mandir}/man1/transmission.1*
 %{_desktopdir}/transmission.desktop
 %{_pixmapsdir}/transmission.png
 %{_iconsdir}/hicolor/*/apps/transmission.png
