@@ -93,10 +93,10 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%find_lang %{name} --all-name --with-gnome
-
 # unsupported
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/eu
+%{__rm} -rf $RPM_BUILD_ROOT%{_localedir}/eu
+
+%find_lang %{name} --all-name --with-gnome
 
 # copy of GPLv2 not needed
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/transmission/web/LICENSE
