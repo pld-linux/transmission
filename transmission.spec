@@ -3,12 +3,12 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	1.52
-Release:	3
+Version:	1.60
+Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
-# Source0-md5:	2a1a628c2a8872934575cb4351bca291
+# Source0-md5:	8b30cf189240f0c50ccd11c618a6906a
 Patch0:		%{name}-ckb_po.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	curl-devel >= 7.15.0
