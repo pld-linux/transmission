@@ -4,7 +4,7 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	1.60
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
@@ -23,6 +23,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel >= 0.9.4
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
+BuildRequires:	qt4-qmake
 Obsoletes:	Transmission <= 1.05
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -77,6 +78,14 @@ interfejs jest zaprojektowany spójnie z dowolnym środowiskiem wybranym
 przez użytkownika. Transmission stawia na równowagę zapewnienia
 przydatnej funkcjonalności bez nadmiaru opcji.
 
+%package gui-qt
+Summary:	A GUI to Transmission based on Qt4
+Group:		X11/Applications/Communications
+Requires:	%{name} = %{version}-%{release}
+
+%description gui-qt
+A GUI to Transmission based on Qt4.
+
 %prep
 %setup -q -c -n transmission-%{version}
 mv transmission-%{version}/* .
@@ -85,6 +94,12 @@ mv transmission-%{version}/* .
 
 %build
 %configure
+%{__make}
+
+cd qt
+qmake-qt4
+%{__sed} -i "s@^CFLAGS.*=.*@CFLAGS = %{rpmcflags} -I/usr/include/openssl $(DEFINES)@" Makefile
+%{__sed} -i "s@^CXXFLAGS.*=.*@CXXFLAGS = %{rpmcxxflags} -I/usr/include/openssl $(DEFINES)@" Makefile
 %{__make}
 
 %install
@@ -97,6 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} -rf $RPM_BUILD_ROOT%{_localedir}/eu
 
 %find_lang %{name} --all-name --with-gnome
+
+install qt/qtr $RPM_BUILD_ROOT%{_bindir}
 
 # copy of GPLv2 not needed
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/transmission/web/LICENSE
@@ -136,3 +153,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pixmapsdir}/transmission.png
 %{_iconsdir}/hicolor/*/apps/transmission.png
 %{_iconsdir}/hicolor/*/apps/transmission.svg
+
+%files gui-qt
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/qtr
