@@ -11,6 +11,8 @@ Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
 # Source0-md5:	8b30cf189240f0c50ccd11c618a6906a
 Patch0:		%{name}-ckb_po.patch
 URL:		http://transmissionbt.com/
+BuildRequires:	QtGui-devel
+BuildRequires:	QtNetwork-devel
 BuildRequires:	curl-devel >= 7.15.0
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	gettext-devel
@@ -23,6 +25,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel >= 0.9.4
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
+BuildRequires:	qt4-build
 BuildRequires:	qt4-qmake
 Obsoletes:	Transmission <= 1.05
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -97,10 +100,10 @@ mv transmission-%{version}/* .
 %{__make}
 
 cd qt
+%{__sed} -i 's/CONFIG += qt thread debug/CONFIG += qt thread/' qtr.pro
 qmake-qt4
-%{__sed} -i "s@^CFLAGS.*=.*@CFLAGS = %{rpmcflags} -I/usr/include/openssl $(DEFINES)@" Makefile
-%{__sed} -i "s@^CXXFLAGS.*=.*@CXXFLAGS = %{rpmcxxflags} -I/usr/include/openssl $(DEFINES)@" Makefile
 %{__make}
+cd -
 
 %install
 rm -rf $RPM_BUILD_ROOT
