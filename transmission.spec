@@ -1,4 +1,3 @@
-# TODO: use system libevent
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
@@ -10,16 +9,17 @@ Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
 # Source0-md5:	fe58bd0bbc2ee132a14ff10dcdba83e2
 Patch0:		%{name}-ckb_po.patch
+Patch1:		%{name}-qtr_details.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	QtGui-devel
 BuildRequires:	QtNetwork-devel
-BuildRequires:	curl-devel >= 7.15.0
+BuildRequires:	curl-devel >= 7.16.3
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.16.0
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	intltool >= 0.35.5
-#BuildRequires:	libevent-devel
+BuildRequires:	libevent-devel >= 1.4.5
 BuildRequires:	libnotify-devel >= 0.4.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	openssl-devel >= 0.9.4
@@ -27,6 +27,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
 BuildRequires:	qt4-build
 BuildRequires:	qt4-qmake
+BuildRequires:	xfsprogs-devel
 Obsoletes:	Transmission <= 1.05
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -84,7 +85,7 @@ przydatnej funkcjonalności bez nadmiaru opcji.
 %package gui-qt
 Summary:	A GUI to Transmission based on Qt4
 Group:		X11/Applications/Communications
-Requires:	%{name} = %{version}-%{release}
+# doesn't require base
 
 %description gui-qt
 A GUI to Transmission based on Qt4.
@@ -93,6 +94,7 @@ A GUI to Transmission based on Qt4.
 %setup -q -c -n transmission-%{version}
 mv transmission-%{version}/* .
 %patch0 -p1
+%patch1 -p1
 %{__rm} po/ckb.po
 
 %build
