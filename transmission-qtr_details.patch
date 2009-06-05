@@ -1,0 +1,19 @@
+--- transmission-1.61/qt/details.cc.orig	2009-05-12 02:32:27.000000000 +0200
++++ transmission-1.61/qt/details.cc	2009-05-16 23:11:25.000000000 +0200
+@@ -143,6 +143,7 @@
+     t->addTab( w = createOptionsTab( ),   tr( "Options" ) );
+     myWidgets << w;
+     layout->addWidget( t );
++    resize(600, height());
+ 
+     QDialogButtonBox * buttons = new QDialogButtonBox( QDialogButtonBox::Close, Qt::Horizontal, this );
+     connect( buttons, SIGNAL(rejected()), this, SLOT(deleteLater()));
+@@ -1048,7 +1049,7 @@
+     v->addWidget( myPeerTree, 1 );
+ 
+     const QFontMetrics m( font( ) );
+-    QSize size = m.size( 0, "1024 MB/s" );
++    QSize size = m.size( 0, "1024,0 MB/s" );
+     myPeerTree->setColumnWidth( COL_UP, size.width( ) );
+     myPeerTree->setColumnWidth( COL_DOWN, size.width( ) );
+     size = m.size( 0, " 100% " );
