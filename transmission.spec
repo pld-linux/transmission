@@ -3,16 +3,19 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	1.70
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
 # Source0-md5:	fe58bd0bbc2ee132a14ff10dcdba83e2
 Patch0:		%{name}-ckb_po.patch
 Patch1:		%{name}-qtr_details.patch
+Patch2:		%{name}-preallocate_syscall.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	QtGui-devel
 BuildRequires:	QtNetwork-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	curl-devel >= 7.16.3
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	gettext-devel
@@ -22,6 +25,7 @@ BuildRequires:	intltool >= 0.35.5
 BuildRequires:	libevent-devel >= 1.4.5
 BuildRequires:	libnotify-devel >= 0.4.4
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool
 BuildRequires:	openssl-devel >= 0.9.4
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
@@ -95,9 +99,14 @@ A GUI to Transmission based on Qt4.
 mv transmission-%{version}/* .
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %{__rm} po/ckb.po
 
 %build
+%{__libtoolize}
+%{__aclocal} -I m4
+%{__autoconf}
+%{__automake}
 %configure
 %{__make}
 
