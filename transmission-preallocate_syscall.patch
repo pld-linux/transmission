@@ -1,0 +1,47 @@
+diff -U 3 -H -d -r -N -- transmission-1.70~/configure.ac transmission-1.70/configure.ac
+--- transmission-1.70~/configure.ac	2009-06-05 00:47:22.000000000 +0200
++++ transmission-1.70/configure.ac	2009-06-05 15:38:32.000000000 +0200
+@@ -87,6 +87,15 @@
+             [AC_DEFINE([HAVE_FALLOCATE],[1],[Defined if fallocate() exists])
+              AC_MSG_RESULT([yes])],
+             [AC_MSG_RESULT([no])])
++
++AC_MSG_CHECKING([for SYS_fallocate])
++AC_TRY_LINK([#include <sys/syscall.h>
++#include <sys/types.h>],
++            [return syscall(SYS_fallocate, 0, 0, (loff_t) 0, (loff_t) 0);],
++            [AC_DEFINE([HAVE_SYS_FALLOCATE],[1],[Defined if you have the SYS_fallocate syscall number])
++             AC_MSG_RESULT([yes])],
++            [AC_MSG_RESULT([no])])
++
+ AC_CHECK_FUNCS([lrintf strlcpy daemon dirname basename daemon strcasecmp localtime_r posix_fallocate memmem])
+ AC_PROG_INSTALL
+ AC_PROG_MAKE_SET
+diff -U 3 -H -d -r -N -- transmission-1.70~/libtransmission/fdlimit.c transmission-1.70/libtransmission/fdlimit.c
+--- transmission-1.70~/libtransmission/fdlimit.c	2009-05-31 23:20:49.000000000 +0200
++++ transmission-1.70/libtransmission/fdlimit.c	2009-06-05 15:44:57.000000000 +0200
+@@ -47,6 +47,10 @@
+  #include <linux/falloc.h>
+ #endif
+ 
++#if !HAVE_FALLOCATE && HAVE_SYS_FALLOCATE
++ #include <sys/syscall.h>
++#endif
++
+ #ifdef HAVE_XFS_XFS_H
+  #include <xfs/xfs.h>
+ #endif
+@@ -185,7 +189,13 @@
+         {
+             success = !fallocate( fd, FALLOC_FL_KEEP_SIZE, 0, length );
+         }
++#elif HAVE_SYS_FALLOCATE
++        if( !success )
++        {
++            success = !syscall( SYS_fallocate, fd, 0, 0, (loff_t)length );
++        }
+ # endif
++
+ # ifdef HAVE_POSIX_FALLOCATE
+         if( !success )
+         {
