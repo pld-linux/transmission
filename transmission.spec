@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	1.71
-Release:	0.1
+Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
@@ -11,6 +11,7 @@ Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-ckb_po.patch
 Patch1:		%{name}-qtr_details.patch
 Patch2:		%{name}-preallocate_syscall.patch
+Patch3:		%{name}-timeval.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	QtGui-devel
 BuildRequires:	QtNetwork-devel
@@ -100,6 +101,7 @@ mv transmission-%{version}/* .
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 %{__rm} po/ckb.po
 
 %build
