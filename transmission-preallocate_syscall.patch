@@ -1,11 +1,9 @@
-diff -U 3 -H -d -r -N -- transmission-1.70~/configure.ac transmission-1.70/configure.ac
---- transmission-1.70~/configure.ac	2009-06-05 00:47:22.000000000 +0200
-+++ transmission-1.70/configure.ac	2009-06-05 15:38:32.000000000 +0200
-@@ -87,6 +87,15 @@
-             [AC_DEFINE([HAVE_FALLOCATE],[1],[Defined if fallocate() exists])
-              AC_MSG_RESULT([yes])],
-             [AC_MSG_RESULT([no])])
-+
+--- transmission-1.72/configure.ac.orig	2009-06-17 02:01:56.000000000 +0200
++++ transmission-1.72/configure.ac	2009-06-18 18:25:44.000000000 +0200
+@@ -81,6 +81,14 @@
+ AC_HEADER_STDC
+ AC_HEADER_TIME
+ 
 +AC_MSG_CHECKING([for SYS_fallocate])
 +AC_TRY_LINK([#include <sys/syscall.h>
 +#include <sys/types.h>],
@@ -17,31 +15,34 @@ diff -U 3 -H -d -r -N -- transmission-1.70~/configure.ac transmission-1.70/confi
  AC_CHECK_FUNCS([lrintf strlcpy daemon dirname basename daemon strcasecmp localtime_r posix_fallocate memmem])
  AC_PROG_INSTALL
  AC_PROG_MAKE_SET
-diff -U 3 -H -d -r -N -- transmission-1.70~/libtransmission/fdlimit.c transmission-1.70/libtransmission/fdlimit.c
---- transmission-1.70~/libtransmission/fdlimit.c	2009-05-31 23:20:49.000000000 +0200
-+++ transmission-1.70/libtransmission/fdlimit.c	2009-06-05 15:44:57.000000000 +0200
-@@ -47,6 +47,10 @@
-  #include <linux/falloc.h>
+--- transmission-1.72/libtransmission/fdlimit.c.orig	2009-06-17 02:01:44.000000000 +0200
++++ transmission-1.72/libtransmission/fdlimit.c	2009-06-18 18:24:45.000000000 +0200
+@@ -43,6 +43,11 @@
+  #include <fcntl.h>
  #endif
  
-+#if !HAVE_FALLOCATE && HAVE_SYS_FALLOCATE
++#ifdef HAVE_SYS_FALLOCATE
++ #include <linux/falloc.h>
 + #include <sys/syscall.h>
 +#endif
 +
  #ifdef HAVE_XFS_XFS_H
   #include <xfs/xfs.h>
  #endif
-@@ -185,7 +189,13 @@
-         {
-             success = !fallocate( fd, FALLOC_FL_KEEP_SIZE, 0, length );
+@@ -176,6 +181,16 @@
+             success = !fcntl( fd, F_PREALLOCATE, &fst );
          }
-+#elif HAVE_SYS_FALLOCATE
+ # endif
++# ifdef HAVE_SYS_FALLOCATE
 +        if( !success )
 +        {
-+            success = !syscall( SYS_fallocate, fd, 0, 0, (loff_t)length );
++            success = !syscall( SYS_fallocate, fd, FALLOC_FL_KEEP_SIZE, 0, (loff_t)length );
++            if( !success )
++            {
++                success = !syscall( SYS_ftruncate, fd, (loff_t)length );
++            }
 +        }
- # endif
-+
++# endif
  # ifdef HAVE_POSIX_FALLOCATE
          if( !success )
          {
