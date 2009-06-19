@@ -29,7 +29,7 @@
  #ifdef HAVE_XFS_XFS_H
   #include <xfs/xfs.h>
  #endif
-@@ -176,6 +181,16 @@
+@@ -176,6 +181,12 @@
              success = !fcntl( fd, F_PREALLOCATE, &fst );
          }
  # endif
@@ -37,10 +37,6 @@
 +        if( !success )
 +        {
 +            success = !syscall( SYS_fallocate, fd, FALLOC_FL_KEEP_SIZE, 0, (loff_t)length );
-+            if( !success )
-+            {
-+                success = !syscall( SYS_ftruncate, fd, (loff_t)length );
-+            }
 +        }
 +# endif
  # ifdef HAVE_POSIX_FALLOCATE
