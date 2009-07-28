@@ -1,0 +1,4 @@
+# TODO:
+- transmission-daemon should be moved to /usr/sbin ?
+- desktop file and icon for qtr
+- non-qt gui shouldn't require main package?

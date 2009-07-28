@@ -3,11 +3,13 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	1.73
-Release:	1
+Release:	1.9
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
 # Source0-md5:	9c1b5d84fb9ddbbd50b5776c1cd6daa4
+Source1:	%{name}.sysconfig
+Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
 Patch1:		%{name}-qtr_details.patch
 URL:		http://transmissionbt.com/
@@ -55,6 +57,18 @@ duże możliwości klientem BitTorrenta. Jego prosty, intuicyjny
 interfejs jest zaprojektowany spójnie z dowolnym środowiskiem wybranym
 przez użytkownika. Transmission stawia na równowagę zapewnienia
 przydatnej funkcjonalności bez nadmiaru opcji.
+
+%package init
+Summary:	daemon package for BitTorrent client
+Group:		Daemon
+Requires:	%{name} = %{version}-%{release}
+
+%description init
+Transmission has been built from the ground up to be a lightweight,
+yet powerful BitTorrent client. Its simple, intuitive interface is
+designed to integrate tightly with whatever computing environment you
+choose to use. Transmission strikes a balance between providing useful
+functionality without feature bloat.
 
 %package gui
 Summary:	A versatile and multi-platform BitTorrent client
@@ -116,9 +130,13 @@ cd -
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT/etc/{%{name},sysconfig,rc.d/init.d} \
+	$RPM_BUILD_ROOT/var/lib/%{name}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 
 # unsupported
 %{__rm} -rf $RPM_BUILD_ROOT%{_localedir}/eu
@@ -132,6 +150,16 @@ install qt/qtr $RPM_BUILD_ROOT%{_bindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post init
+/sbin/chkconfig --add transmission
+%service transmission restart
+
+%preun init
+if [ "$1" = "0" ]; then
+        %service transmission stop
+        /sbin/chkconfig --del transmission
+fi
 
 %post gui
 %update_desktop_database_post
@@ -156,6 +184,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/javascript
 %{_appdir}/stylesheets
 %{_appdir}/index.html
+
+%files init
+%defattr(644,root,root,755)
+%attr(751,root,daemon) %dir /etc/%{name}
+%attr(640,root,daemon) %config(noreplace) %verify(not md5 mtime size) /etc/%{name}/*
+%attr(640,root,daemon) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
+%attr(750,daemon,root) %dir /var/lib/%{name}
 
 %files gui
 %defattr(644,root,root,755)

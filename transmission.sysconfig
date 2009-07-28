@@ -1,0 +1,10 @@
+# configuration for transmission
+#
+# Where are torrent files:
+TORRENTS=/var/lib/transmission
+
+# Where downloads (set here something sane):
+DOWNLOADS=/var/lib/transmission
+
+# Additional options:
+OPTIONS=""
