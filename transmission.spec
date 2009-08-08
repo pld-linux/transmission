@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	1.73
-Release:	2
+Release:	3
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
@@ -137,6 +137,7 @@ install -d $RPM_BUILD_ROOT/etc/{%{name},sysconfig,rc.d/init.d} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 
 # unsupported
 %{__rm} -rf $RPM_BUILD_ROOT%{_localedir}/eu
@@ -188,8 +189,9 @@ fi
 %files init
 %defattr(644,root,root,755)
 %attr(751,root,daemon) %dir /etc/%{name}
-%attr(640,root,daemon) %config(noreplace) %verify(not md5 mtime size) /etc/%{name}/*
+#%attr(640,root,daemon) %config(noreplace) %verify(not md5 mtime size) /etc/%{name}/*
 %attr(640,root,daemon) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
+%attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(750,daemon,root) %dir /var/lib/%{name}
 
 %files gui
