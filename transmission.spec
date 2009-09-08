@@ -46,7 +46,7 @@ choose to use. Transmission strikes a balance between providing useful
 functionality without feature bloat.
 
 %description -l hu.UTF-8
-Transmission egy könnyűsúlyú de mégis egy erőteljes BitTorrent kliens.
+Transmission egy könnyűsúlyú, de mégis egy erőteljes BitTorrent kliens.
 Egyszerű, intuitív felülete szorosan illeszkedik bármilyen
 számítógépes környezetbe, amit csak választasz. A Transmission célja
 megtalálni a használható funkcionalitást lehetőségek áradata nélkül.
