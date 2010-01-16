@@ -28,11 +28,13 @@ BuildRequires:	libevent-devel >= 1.4.5
 BuildRequires:	libnotify-devel >= 0.4.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
+BuildRequires:	lsb-release
 BuildRequires:	openssl-devel >= 0.9.4
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.357
 BuildRequires:	qt4-build
 BuildRequires:	qt4-qmake
+BuildRequires:	rpmbuild(macros) >= 1.357
+BuildRequires:	which
 BuildRequires:	xfsprogs-devel
 Obsoletes:	Transmission <= 1.05
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -61,7 +63,7 @@ przydatnej funkcjonalności bez nadmiaru opcji.
 
 %package init
 Summary:	daemon package for BitTorrent client
-Group:		Daemon
+Group:		Networking/Daemons
 Requires:	%{name} = %{version}-%{release}
 
 %description init
@@ -74,9 +76,9 @@ functionality without feature bloat.
 %package gui
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
-Group:		X11/Applications/Communications
-Requires(post,postun):	hicolor-icon-theme
+Group:		X11/Applications/Networking
 Requires(post,postun):	gtk+2
+Requires(post,postun):	hicolor-icon-theme
 Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2 >= 2:2.6.0
 
@@ -102,19 +104,20 @@ przydatnej funkcjonalności bez nadmiaru opcji.
 
 %package gui-qt
 Summary:	A GUI to Transmission based on Qt4
-Group:		X11/Applications/Communications
+Group:		X11/Applications/Networking
 # doesn't require base
 
 %description gui-qt
 A GUI to Transmission based on Qt4.
 
 %prep
-%setup -q -c -n transmission-%{version}
-mv transmission-%{version}/* .
+%setup -qc
+mv %{name}-%{version}/* .
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %{__rm} po/ckb.po
+%{__sed} -i 's/CONFIG += qt thread debug/CONFIG += qt thread/' qt/qtr.pro
 
 %build
 %{__libtoolize}
@@ -125,14 +128,14 @@ mv transmission-%{version}/* .
 %{__make}
 
 cd qt
-%{__sed} -i 's/CONFIG += qt thread debug/CONFIG += qt thread/' qtr.pro
 qmake-qt4
 %{__make}
 cd -
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{%{name},sysconfig,rc.d/init.d} \
+install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d} \
+	$RPM_BUILD_ROOT%{_sysconfdir}/%{name} \
 	$RPM_BUILD_ROOT/var/lib/%{name}
 
 %{__make} install \
@@ -142,7 +145,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 
 # unsupported
-%{__rm} -rf $RPM_BUILD_ROOT%{_localedir}/eu
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/eu
 
 %find_lang %{name} --all-name --with-gnome
 
@@ -190,8 +193,8 @@ fi
 
 %files init
 %defattr(644,root,root,755)
-%attr(751,root,daemon) %dir /etc/%{name}
-#%attr(640,root,daemon) %config(noreplace) %verify(not md5 mtime size) /etc/%{name}/*
+%attr(751,root,daemon) %dir %{_sysconfdir}/%{name}
+#%attr(640,root,daemon) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/*
 %attr(640,root,daemon) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(750,daemon,root) %dir /var/lib/%{name}
