@@ -1,0 +1,25 @@
+--- transmission-1.83/configure.ac.orig	2010-01-29 02:02:28.000000000 +0100
++++ transmission-1.83/configure.ac	2010-02-07 05:19:38.000000000 +0100
+@@ -21,20 +21,8 @@
+ AM_INIT_AUTOMAKE([1.9 tar-ustar])
+ AC_PROG_LIBTOOL
+ 
+-if test m4_substr(peer_id_prefix,6,1) = "0"; then
+-  supported_build=yes
+-  if test "x$GCC" = "xyes" ; then
+-    CFLAGS="$CFLAGS -g -O3 "
+-    CXXFLAGS="$CXXFLAGS -g -O3 "
+-  fi
+-  CPPFLAGS="$CPPFLAGS -DNDEBUG"
+-else
+-  supported_build=no
+-  if test "x$GCC" = "xyes" ; then
+-    CFLAGS="$CFLAGS -g -O0"
+-    CXXFLAGS="$CXXFLAGS -g -O0"
+-  fi
+-fi
++CPPFLAGS="$CPPFLAGS -DNDEBUG"
++
+ AM_CONDITIONAL(TR_UNSTABLE, test "x$supported_build" = "xno")
+ 
+ # MANDATORY for libtransmission
