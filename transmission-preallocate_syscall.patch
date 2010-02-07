@@ -1,6 +1,6 @@
---- transmission-1.82/configure.ac.orig	2010-01-23 16:11:34.000000000 +0100
-+++ transmission-1.82/configure.ac	2010-01-26 23:24:47.000000000 +0100
-@@ -93,6 +93,14 @@
+--- transmission-1.83/configure.ac.orig	2010-02-07 14:31:56.000000000 +0100
++++ transmission-1.83/configure.ac	2010-02-07 14:31:56.000000000 +0100
+@@ -81,6 +81,14 @@
  AC_HEADER_STDC
  AC_HEADER_TIME
  
@@ -15,28 +15,27 @@
  AC_CHECK_FUNCS([pread pwrite lrintf strlcpy daemon dirname basename strcasecmp localtime_r posix_fallocate memmem strtold syslog])
  AC_PROG_INSTALL
  AC_PROG_MAKE_SET
---- transmission-1.73/libtransmission/fdlimit.c.orig	2009-07-18 03:20:54.000000000 +0200
-+++ transmission-1.73/libtransmission/fdlimit.c	2009-07-25 00:17:11.000000000 +0200
-@@ -43,6 +43,11 @@
+--- transmission-1.83/libtransmission/fdlimit.c.orig	2010-01-29 02:01:32.000000000 +0100
++++ transmission-1.83/libtransmission/fdlimit.c	2010-02-07 05:53:09.000000000 +0100
+@@ -43,6 +43,10 @@
   #include <fcntl.h>
  #endif
  
 +#ifdef HAVE_SYS_FALLOCATE
-+ #include <linux/falloc.h>
 + #include <sys/syscall.h>
 +#endif
 +
  #ifdef HAVE_XFS_XFS_H
   #include <xfs/xfs.h>
  #endif
-@@ -172,6 +177,12 @@
+@@ -168,6 +172,12 @@
              success = !fcntl( fd, F_PREALLOCATE, &fst );
          }
  # endif
 +# ifdef HAVE_SYS_FALLOCATE
 +        if( !success )
 +        {
-+            success = !syscall( SYS_fallocate, fd, FALLOC_FL_KEEP_SIZE, 0, (loff_t)length );
++            success = !syscall( SYS_fallocate, fd, 0, (loff_t) 0, (loff_t) length );
 +        }
 +# endif
  # ifdef HAVE_POSIX_FALLOCATE
