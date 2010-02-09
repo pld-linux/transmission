@@ -36,6 +36,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
 BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(macros) >= 1.357
+BuildRequires:	util-linux
 BuildRequires:	which
 BuildRequires:	xfsprogs-devel
 Obsoletes:	Transmission <= 1.05
@@ -51,8 +52,8 @@ choose to use. Transmission strikes a balance between providing useful
 functionality without feature bloat.
 
 %description -l hu.UTF-8
-Transmission egy könnyűsúlyú, de mégis egy erőteljes BitTorrent kliens.
-Egyszerű, intuitív felülete szorosan illeszkedik bármilyen
+Transmission egy könnyűsúlyú, de mégis egy erőteljes BitTorrent
+kliens. Egyszerű, intuitív felülete szorosan illeszkedik bármilyen
 számítógépes környezetbe, amit csak választasz. A Transmission célja
 megtalálni a használható funkcionalitást lehetőségek áradata nélkül.
 
