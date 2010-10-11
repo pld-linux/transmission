@@ -2,12 +2,12 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	2.04
+Version:	2.10
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
-# Source0-md5:	84fe15eb7e000fdc369def513299358b
+# Source0-md5:	3b32d981d746abf8b0292c6ab01d10d4
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
@@ -154,7 +154,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 
 %find_lang %{name} --all-name --with-gnome
 
-install qt/qtr $RPM_BUILD_ROOT%{_bindir}
+#install qt/qtr $RPM_BUILD_ROOT%{_bindir}
 
 # copy of GPLv2 not needed
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/transmission/web/LICENSE
@@ -183,12 +183,18 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
-%attr(755,root,root) %{_bindir}/transmissioncli
+%attr(755,root,root) %{_bindir}/transmission-cli
+%attr(755,root,root) %{_bindir}/transmission-create
 %attr(755,root,root) %{_bindir}/transmission-daemon
+%attr(755,root,root) %{_bindir}/transmission-edit
 %attr(755,root,root) %{_bindir}/transmission-remote
-%{_mandir}/man1/transmissioncli.1*
+%attr(755,root,root) %{_bindir}/transmission-show
+%{_mandir}/man1/transmission-cli.1*
+%{_mandir}/man1/transmission-create.1*
 %{_mandir}/man1/transmission-daemon.1*
+%{_mandir}/man1/transmission-edit.1*
 %{_mandir}/man1/transmission-remote.1*
+%{_mandir}/man1/transmission-show.1*
 %dir %{_datadir}/%{name}
 %dir %{_appdir}
 %{_appdir}/images
@@ -206,13 +212,13 @@ fi
 
 %files gui
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/transmission
-%{_mandir}/man1/transmission.1*
-%{_desktopdir}/transmission.desktop
+%attr(755,root,root) %{_bindir}/transmission-gtk
+%{_mandir}/man1/transmission-gtk.1*
+%{_desktopdir}/transmission-gtk.desktop
 %{_pixmapsdir}/transmission.png
 %{_iconsdir}/hicolor/*/apps/transmission.png
 %{_iconsdir}/hicolor/*/apps/transmission.svg
 
 %files gui-qt
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/qtr
+#%attr(755,root,root) %{_bindir}/qtr
