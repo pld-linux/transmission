@@ -149,12 +149,14 @@ install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d} \
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 
+install qt/transmission-qt $RPM_BUILD_ROOT%{_bindir}
+install qt/transmission-qt.desktop $RPM_BUILD_ROOT%{_desktopdir}
+install gtk/transmission.png $RPM_BUILD_ROOT%{_pixmapsdir}/transmission-qt.png
+
 # unsupported
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/eu
 
 %find_lang %{name} --all-name --with-gnome
-
-#install qt/qtr $RPM_BUILD_ROOT%{_bindir}
 
 # copy of GPLv2 not needed
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/transmission/web/LICENSE
@@ -221,4 +223,6 @@ fi
 
 %files gui-qt
 %defattr(644,root,root,755)
-#%attr(755,root,root) %{_bindir}/qtr
+%attr(755,root,root) %{_bindir}/transmission-qt
+%{_desktopdir}/transmission-qt.desktop
+%{_pixmapsdir}/transmission-qt.png
