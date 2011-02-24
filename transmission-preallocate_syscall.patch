@@ -1,9 +1,9 @@
---- transmission-2.13/configure.ac.orig	2010-12-17 11:42:13.000000000 +0200
-+++ transmission-2.13/configure.ac	2010-12-17 12:26:16.737078863 +0200
+--- transmission-2.21/configure.ac~     2011-02-24 23:12:10.304798067 +0100
++++ transmission-2.21/configure.ac      2011-02-24 23:14:30.981464735 +0100
 @@ -99,6 +99,14 @@
  AC_HEADER_STDC
  AC_HEADER_TIME
- 
+
 +AC_MSG_CHECKING([for SYS_fallocate])
 +AC_TRY_LINK([#include <sys/syscall.h>
 +#include <sys/types.h>],
@@ -12,7 +12,7 @@
 +       AC_MSG_RESULT([yes])],
 +       [AC_MSG_RESULT([no])])
 +
- AC_CHECK_FUNCS([iconv_open pread pwrite lrintf strlcpy daemon dirname basename strcasecmp localtime_r fallocate64 posix_fallocate memmem strsep strtold syslog valloc getpagesize posix_memalign])
+ AC_CHECK_FUNCS([iconv_open pread pwrite lrintf strlcpy daemon dirname basename strcasecmp localtime_r fallocate64 posix_fallocate memmem strsep strtold syslog valloc getpagesize posix_memalign statvfs])
  AC_PROG_INSTALL
  AC_PROG_MAKE_SET
 diff -ur transmission-2.00-orig//libtransmission/fdlimit.c transmission-2.00/libtransmission/fdlimit.c
