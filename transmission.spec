@@ -7,7 +7,7 @@ Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
-# Source0-md5:	6499986bf769276310b00bda1090090d
+# Source0-md5:	b93b7b498b68ce8c1be39795d36560cd
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
