@@ -2,12 +2,12 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	2.30b2
+Version:	2.30b3
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
-# Source0-md5:	b93b7b498b68ce8c1be39795d36560cd
+# Source0-md5:	d75403c253d78a78afd65b402d946609
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
@@ -40,6 +40,7 @@ BuildRequires:	rpmbuild(macros) >= 1.357
 BuildRequires:	util-linux
 BuildRequires:	which
 BuildRequires:	xfsprogs-devel
+BuildRequires:  sqlite3-devel
 Obsoletes:	Transmission <= 1.05
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -155,6 +156,7 @@ install gtk/transmission.png $RPM_BUILD_ROOT%{_pixmapsdir}/transmission-qt.png
 
 # unsupported
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/eu
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ur
 
 %find_lang %{name} --all-name --with-gnome
 
