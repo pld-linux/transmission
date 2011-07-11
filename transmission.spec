@@ -1,9 +1,11 @@
+# Conditional build:
+%bcond_with verchange     # changes client version identifiaction to 2.22
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	2.32
-Release:	2
+Release:	3
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
@@ -14,6 +16,7 @@ Patch0:		%{name}-ckb_po.patch
 Patch1:		%{name}-qtr_details.patch
 Patch2:		%{name}-cflags.patch
 Patch3:		%{name}-preallocate_syscall.patch
+Patch4:		%{name}-version.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	QtDBus-devel
 BuildRequires:	QtGui-devel
@@ -121,6 +124,7 @@ mv %{name}-%{version}/* .
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%{?with_verchange:%patch4 -p1}
 %{__rm} po/ckb.po
 %{__sed} -i 's/\(^CONFIG.*\)\( debug\)/\1/' qt/qtr.pro
 
