@@ -1,63 +1,63 @@
-diff -ur transmission-2.32-orig/configure transmission-2.32/configure
---- transmission-2.32-orig/configure	2011-06-29 03:31:11.639509935 +0200
-+++ transmission-2.32/configure	2011-07-11 10:09:41.915517039 +0200
-@@ -570,8 +570,8 @@
+diff -ur transmission-2.33-orig/configure transmission-2.33/configure
+--- transmission-2.33-orig/configure	2011-07-25 13:00:38.420579295 +0200
++++ transmission-2.33/configure	2011-07-25 13:02:30.535434531 +0200
+@@ -701,8 +701,8 @@
  # Identity of this package.
  PACKAGE_NAME='transmission'
  PACKAGE_TARNAME='transmission'
--PACKAGE_VERSION='2.32'
--PACKAGE_STRING='transmission 2.32'
+-PACKAGE_VERSION='2.33'
+-PACKAGE_STRING='transmission 2.33'
 +PACKAGE_VERSION='2.22'
 +PACKAGE_STRING='transmission 2.22'
  PACKAGE_BUGREPORT='http://trac.transmissionbt.com/newticket'
  PACKAGE_URL=''
  
-@@ -2557,9 +2557,9 @@
+@@ -2673,9 +2673,9 @@
  ac_compiler_gnu=$ac_cv_c_compiler_gnu
  
  
--USERAGENT_PREFIX=2.32
+-USERAGENT_PREFIX=2.33
 +USERAGENT_PREFIX=2.22
  
--PEERID_PREFIX=-TR2320-
+-PEERID_PREFIX=-TR2330-
 +PEERID_PREFIX=-TR2220-
  
  
  # Check whether --enable-silent-rules was given.
-@@ -3045,7 +3045,7 @@
+@@ -3161,7 +3161,7 @@
  
  # Define the identity of the package.
   PACKAGE='transmission'
-- VERSION='2.32'
+- VERSION='2.33'
 + VERSION='2.22'
  
  
  cat >>confdefs.h <<_ACEOF
-diff -ur transmission-2.32-orig/configure.ac transmission-2.32/configure.ac
---- transmission-2.32-orig/configure.ac	2011-06-29 03:30:42.743752526 +0200
-+++ transmission-2.32/configure.ac	2011-07-11 10:10:21.297278331 +0200
+diff -ur transmission-2.33-orig/configure.ac transmission-2.33/configure.ac
+--- transmission-2.33-orig/configure.ac	2011-07-25 13:00:49.851074322 +0200
++++ transmission-2.33/configure.ac	2011-07-25 13:03:19.547556906 +0200
 @@ -3,8 +3,8 @@
  dnl         "Z" for unsupported trunk builds,
  dnl         "0" for stable, supported releases
  dnl these should be the only two lines you need to change
--m4_define([user_agent_prefix],[2.32])
--m4_define([peer_id_prefix],[-TR2320-])
+-m4_define([user_agent_prefix],[2.33])
+-m4_define([peer_id_prefix],[-TR2330-])
 +m4_define([user_agent_prefix],[2.22])
 +m4_define([peer_id_prefix],[-TR2220-])
  
  AC_INIT([transmission],
          [user_agent_prefix],
-diff -ur transmission-2.32-orig/libtransmission/version.h transmission-2.32/libtransmission/version.h
---- transmission-2.32-orig/libtransmission/version.h	2011-06-29 03:15:46.733786565 +0200
-+++ transmission-2.32/libtransmission/version.h	2011-07-11 10:11:42.834258039 +0200
+diff -ur transmission-2.33-orig/libtransmission/version.h transmission-2.33/libtransmission/version.h
+--- transmission-2.33-orig/libtransmission/version.h	2011-07-25 13:00:39.560628667 +0200
++++ transmission-2.33/libtransmission/version.h	2011-07-25 13:04:21.740249920 +0200
 @@ -1,10 +1,10 @@
--#define PEERID_PREFIX             "-TR2320-"
--#define USERAGENT_PREFIX          "2.32"
--#define SVN_REVISION              "12526"
--#define SVN_REVISION_NUM          12526
--#define SHORT_VERSION_STRING      "2.32"
--#define LONG_VERSION_STRING       "2.32 (12526)"
--#define VERSION_STRING_INFOPLIST  2.32
+-#define PEERID_PREFIX             "-TR2330-"
+-#define USERAGENT_PREFIX          "2.33"
+-#define SVN_REVISION              "12565"
+-#define SVN_REVISION_NUM          12565
+-#define SHORT_VERSION_STRING      "2.33"
+-#define LONG_VERSION_STRING       "2.33 (12565)"
+-#define VERSION_STRING_INFOPLIST  2.33
 +#define PEERID_PREFIX             "-TR2220-"
 +#define USERAGENT_PREFIX          "2.22"
 +#define SVN_REVISION              "12099"
@@ -66,6 +66,6 @@ diff -ur transmission-2.32-orig/libtransmission/version.h transmission-2.32/libt
 +#define LONG_VERSION_STRING       "2.22 (12099)"
 +#define VERSION_STRING_INFOPLIST  2.22
  #define MAJOR_VERSION             2
--#define MINOR_VERSION             32
+-#define MINOR_VERSION             33
 +#define MINOR_VERSION             22
  #define TR_STABLE_RELEASE         1
