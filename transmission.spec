@@ -1,15 +1,18 @@
+#
 # Conditional build:
 %bcond_with verchange     # changes client version identifiaction to 2.22
+#
+%define		snap b2
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	2.33
+Version:	2.40
 Release:	1
 License:	MIT
 Group:		Applications/Communications
-Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
-# Source0-md5:	082217a65713ac879410c622cbe6eb26
+Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}%{snap}.tar.bz2
+# Source0-md5:	bb6d1325b06dc30a3fe58805f520a47a
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
@@ -40,6 +43,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
 BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(macros) >= 1.357
+BuildRequires:	sqlite3-devel
 BuildRequires:	util-linux
 BuildRequires:	which
 BuildRequires:	xfsprogs-devel
@@ -118,8 +122,8 @@ Group:		X11/Applications/Networking
 A GUI to Transmission based on Qt4.
 
 %prep
-%setup -qc
-mv %{name}-%{version}/* .
+%setup -qc -n %{name}-%{version}%{snap}
+mv %{name}-%{version}%{snap}/* .
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
