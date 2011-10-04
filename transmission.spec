@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_with verchange     # changes client version identifiaction to 2.22
 #
-%define		snap b2
+%define		snap b3
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
@@ -12,7 +12,7 @@ Release:	0.%{snap}.1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}%{snap}.tar.bz2
-# Source0-md5:	bb6d1325b06dc30a3fe58805f520a47a
+# Source0-md5:	07ace38106b42e5b66959123f742d2d0
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
