@@ -40,6 +40,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
 BuildRequires:	qt4-qmake
 BuildRequires:	rpmbuild(macros) >= 1.357
+BuildRequires:	sqlite3-devel
 BuildRequires:	util-linux
 BuildRequires:	which
 BuildRequires:	xfsprogs-devel
