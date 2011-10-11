@@ -1,71 +1,62 @@
-diff -ur transmission-2.33-orig/configure transmission-2.33/configure
---- transmission-2.33-orig/configure	2011-07-25 13:00:38.420579295 +0200
-+++ transmission-2.33/configure	2011-07-25 13:02:30.535434531 +0200
-@@ -701,8 +701,8 @@
+diff -ur transmission-2.41-orig/configure transmission-2.41/configure
+--- transmission-2.41-orig/configure	2011-10-11 13:08:57.632668941 +0200
++++ transmission-2.41/configure	2011-10-11 13:13:54.969736327 +0200
+@@ -570,8 +570,8 @@
  # Identity of this package.
  PACKAGE_NAME='transmission'
  PACKAGE_TARNAME='transmission'
--PACKAGE_VERSION='2.33'
--PACKAGE_STRING='transmission 2.33'
-+PACKAGE_VERSION='2.22'
-+PACKAGE_STRING='transmission 2.22'
+-PACKAGE_VERSION='2.41'
+-PACKAGE_STRING='transmission 2.41'
++PACKAGE_VERSION='2.33'
++PACKAGE_STRING='transmission 2.33'
  PACKAGE_BUGREPORT='http://trac.transmissionbt.com/newticket'
  PACKAGE_URL=''
  
-@@ -2673,9 +2673,9 @@
+@@ -2509,9 +2509,9 @@
  ac_compiler_gnu=$ac_cv_c_compiler_gnu
  
  
--USERAGENT_PREFIX=2.33
-+USERAGENT_PREFIX=2.22
+-USERAGENT_PREFIX=2.41
++USERAGENT_PREFIX=2.33
  
--PEERID_PREFIX=-TR2330-
-+PEERID_PREFIX=-TR2220-
+-PEERID_PREFIX=-TR2410-
++PEERID_PREFIX=-TR2330-
  
  
  # Check whether --enable-silent-rules was given.
-@@ -3161,7 +3161,7 @@
- 
- # Define the identity of the package.
-  PACKAGE='transmission'
-- VERSION='2.33'
-+ VERSION='2.22'
- 
- 
- cat >>confdefs.h <<_ACEOF
-diff -ur transmission-2.33-orig/configure.ac transmission-2.33/configure.ac
---- transmission-2.33-orig/configure.ac	2011-07-25 13:00:49.851074322 +0200
-+++ transmission-2.33/configure.ac	2011-07-25 13:03:19.547556906 +0200
+diff -ur transmission-2.41-orig/configure.ac transmission-2.41/configure.ac
+--- transmission-2.41-orig/configure.ac	2011-10-11 13:08:59.142738694 +0200
++++ transmission-2.41/configure.ac	2011-10-11 13:14:45.528738295 +0200
 @@ -3,8 +3,8 @@
  dnl         "Z" for unsupported trunk builds,
  dnl         "0" for stable, supported releases
  dnl these should be the only two lines you need to change
--m4_define([user_agent_prefix],[2.33])
--m4_define([peer_id_prefix],[-TR2330-])
-+m4_define([user_agent_prefix],[2.22])
-+m4_define([peer_id_prefix],[-TR2220-])
+-m4_define([user_agent_prefix],[2.41])
+-m4_define([peer_id_prefix],[-TR2410-])
++m4_define([user_agent_prefix],[2.33])
++m4_define([peer_id_prefix],[-TR2330-])
  
  AC_INIT([transmission],
          [user_agent_prefix],
-diff -ur transmission-2.33-orig/libtransmission/version.h transmission-2.33/libtransmission/version.h
---- transmission-2.33-orig/libtransmission/version.h	2011-07-25 13:00:39.560628667 +0200
-+++ transmission-2.33/libtransmission/version.h	2011-07-25 13:04:21.740249920 +0200
+diff -ur transmission-2.41-orig/libtransmission/version.h transmission-2.41/libtransmission/version.h
+--- transmission-2.41-orig/libtransmission/version.h	2011-10-11 13:08:57.982685108 +0200
++++ transmission-2.41/libtransmission/version.h	2011-07-21 01:39:34.000000000 +0200
 @@ -1,10 +1,10 @@
--#define PEERID_PREFIX             "-TR2330-"
--#define USERAGENT_PREFIX          "2.33"
--#define SVN_REVISION              "12565"
--#define SVN_REVISION_NUM          12565
--#define SHORT_VERSION_STRING      "2.33"
--#define LONG_VERSION_STRING       "2.33 (12565)"
--#define VERSION_STRING_INFOPLIST  2.33
-+#define PEERID_PREFIX             "-TR2220-"
-+#define USERAGENT_PREFIX          "2.22"
-+#define SVN_REVISION              "12099"
-+#define SVN_REVISION_NUM          12099
-+#define SHORT_VERSION_STRING      "2.22"
-+#define LONG_VERSION_STRING       "2.22 (12099)"
-+#define VERSION_STRING_INFOPLIST  2.22
+-#define PEERID_PREFIX             "-TR2410-"
+-#define USERAGENT_PREFIX          "2.41"
+-#define SVN_REVISION              "12957"
+-#define SVN_REVISION_NUM          12957
+-#define SHORT_VERSION_STRING      "2.41"
+-#define LONG_VERSION_STRING       "2.41 (12957)"
+-#define VERSION_STRING_INFOPLIST  2.41
++#define PEERID_PREFIX             "-TR2330-"
++#define USERAGENT_PREFIX          "2.33"
++#define SVN_REVISION              "12565"
++#define SVN_REVISION_NUM          12565
++#define SHORT_VERSION_STRING      "2.33"
++#define LONG_VERSION_STRING       "2.33 (12565)"
++#define VERSION_STRING_INFOPLIST  2.33
  #define MAJOR_VERSION             2
--#define MINOR_VERSION             33
-+#define MINOR_VERSION             22
+-#define MINOR_VERSION             41
++#define MINOR_VERSION             33
  #define TR_STABLE_RELEASE         1
