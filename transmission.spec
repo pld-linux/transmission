@@ -4,12 +4,12 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	2.42
+Version:	2.50
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.bz2
-# Source0-md5:	2ade0818d465779bd956b8b72ea56b02
+# Source0-md5:	c3611108e34fe6ebdcf93da5beb89045
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
@@ -22,12 +22,12 @@ BuildRequires:	QtDBus-devel
 BuildRequires:	QtGui-devel
 BuildRequires:	QtNetwork-devel
 BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	automake >= 1:1.9
 BuildRequires:	curl-devel >= 7.16.3
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.16.0
-BuildRequires:	gtk+2-devel >= 2:2.6.0
+BuildRequires:	glib2-devel >= 1:2.28.0
+BuildRequires:	gtk+3-devel >= 3.2.0
 BuildRequires:	intltool >= 0.35.5
 BuildRequires:	libcanberra-gtk-devel
 BuildRequires:	libevent-devel >= 2.0.0
@@ -88,7 +88,7 @@ Group:		X11/Applications/Networking
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	%{name} = %{version}-%{release}
-Requires:	gtk+2 >= 2:2.6.0
+Requires:	gtk+3 >= 3.2.0
 
 %description gui
 Transmission has been built from the ground up to be a lightweight,
@@ -134,7 +134,9 @@ mv %{name}-%{version}/* .
 %{__aclocal} -I m4
 %{__autoconf}
 %{__automake}
-%configure
+%configure \
+	--with-gtk=3 \
+	--disable-silent-rules
 %{__make}
 
 cd qt
@@ -169,7 +171,7 @@ install gtk/transmission.png $RPM_BUILD_ROOT%{_pixmapsdir}/transmission-qt.png
 %find_lang %{name} --all-name --with-gnome
 
 # copy of GPLv2 not needed
-%{__rm} $RPM_BUILD_ROOT%{_datadir}/transmission/web/LICENSE
+%{__rm} $RPM_BUILD_ROOT%{_appdir}/LICENSE
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -211,7 +213,7 @@ fi
 %dir %{_appdir}
 %{_appdir}/images
 %{_appdir}/javascript
-%{_appdir}/stylesheets
+%{_appdir}/style
 %{_appdir}/index.html
 
 %files init
