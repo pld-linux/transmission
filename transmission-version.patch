@@ -5,8 +5,8 @@ diff -ur transmission-2.41-orig/configure transmission-2.41/configure
  # Identity of this package.
  PACKAGE_NAME='transmission'
  PACKAGE_TARNAME='transmission'
--PACKAGE_VERSION='2.41'
--PACKAGE_STRING='transmission 2.41'
+-PACKAGE_VERSION='2.51'
+-PACKAGE_STRING='transmission 2.51'
 +PACKAGE_VERSION='2.33'
 +PACKAGE_STRING='transmission 2.33'
  PACKAGE_BUGREPORT='http://trac.transmissionbt.com/newticket'
@@ -16,10 +16,10 @@ diff -ur transmission-2.41-orig/configure transmission-2.41/configure
  ac_compiler_gnu=$ac_cv_c_compiler_gnu
  
  
--USERAGENT_PREFIX=2.41
+-USERAGENT_PREFIX=2.51
 +USERAGENT_PREFIX=2.33
  
--PEERID_PREFIX=-TR2410-
+-PEERID_PREFIX=-TR2510-
 +PEERID_PREFIX=-TR2330-
  
  
@@ -31,8 +31,8 @@ diff -ur transmission-2.41-orig/configure.ac transmission-2.41/configure.ac
  dnl         "Z" for unsupported trunk builds,
  dnl         "0" for stable, supported releases
  dnl these should be the only two lines you need to change
--m4_define([user_agent_prefix],[2.41])
--m4_define([peer_id_prefix],[-TR2410-])
+-m4_define([user_agent_prefix],[2.51])
+-m4_define([peer_id_prefix],[-TR2510-])
 +m4_define([user_agent_prefix],[2.33])
 +m4_define([peer_id_prefix],[-TR2330-])
  
@@ -42,13 +42,13 @@ diff -ur transmission-2.41-orig/libtransmission/version.h transmission-2.41/libt
 --- transmission-2.41-orig/libtransmission/version.h	2011-10-11 13:08:57.982685108 +0200
 +++ transmission-2.41/libtransmission/version.h	2011-07-21 01:39:34.000000000 +0200
 @@ -1,10 +1,10 @@
--#define PEERID_PREFIX             "-TR2410-"
--#define USERAGENT_PREFIX          "2.41"
--#define SVN_REVISION              "12957"
--#define SVN_REVISION_NUM          12957
--#define SHORT_VERSION_STRING      "2.41"
--#define LONG_VERSION_STRING       "2.41 (12957)"
--#define VERSION_STRING_INFOPLIST  2.41
+-#define PEERID_PREFIX             "-TR2510-"
+-#define USERAGENT_PREFIX          "2.51"
+-#define SVN_REVISION              "13280"
+-#define SVN_REVISION_NUM          13280
+-#define SHORT_VERSION_STRING      "2.51"
+-#define LONG_VERSION_STRING       "2.51 (13280)"
+-#define VERSION_STRING_INFOPLIST  2.51
 +#define PEERID_PREFIX             "-TR2330-"
 +#define USERAGENT_PREFIX          "2.33"
 +#define SVN_REVISION              "12565"
@@ -57,6 +57,6 @@ diff -ur transmission-2.41-orig/libtransmission/version.h transmission-2.41/libt
 +#define LONG_VERSION_STRING       "2.33 (12565)"
 +#define VERSION_STRING_INFOPLIST  2.33
  #define MAJOR_VERSION             2
--#define MINOR_VERSION             41
+-#define MINOR_VERSION             51
 +#define MINOR_VERSION             33
  #define TR_STABLE_RELEASE         1
