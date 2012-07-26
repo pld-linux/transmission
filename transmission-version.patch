@@ -1,62 +1,13 @@
-diff -ur transmission-2.41-orig/configure transmission-2.41/configure
---- transmission-2.41-orig/configure	2011-10-11 13:08:57.632668941 +0200
-+++ transmission-2.41/configure	2011-10-11 13:13:54.969736327 +0200
-@@ -570,8 +570,8 @@
- # Identity of this package.
- PACKAGE_NAME='transmission'
- PACKAGE_TARNAME='transmission'
--PACKAGE_VERSION='2.51'
--PACKAGE_STRING='transmission 2.51'
-+PACKAGE_VERSION='2.33'
-+PACKAGE_STRING='transmission 2.33'
- PACKAGE_BUGREPORT='http://trac.transmissionbt.com/newticket'
- PACKAGE_URL=''
- 
-@@ -2509,9 +2509,9 @@
- ac_compiler_gnu=$ac_cv_c_compiler_gnu
- 
- 
--USERAGENT_PREFIX=2.51
-+USERAGENT_PREFIX=2.33
- 
--PEERID_PREFIX=-TR2510-
-+PEERID_PREFIX=-TR2330-
- 
- 
- # Check whether --enable-silent-rules was given.
-diff -ur transmission-2.41-orig/configure.ac transmission-2.41/configure.ac
---- transmission-2.41-orig/configure.ac	2011-10-11 13:08:59.142738694 +0200
-+++ transmission-2.41/configure.ac	2011-10-11 13:14:45.528738295 +0200
+--- transmission-2.61/configure.ac.orig
++++ transmission-2.61/configure.ac
 @@ -3,8 +3,8 @@
  dnl         "Z" for unsupported trunk builds,
  dnl         "0" for stable, supported releases
  dnl these should be the only two lines you need to change
--m4_define([user_agent_prefix],[2.51])
--m4_define([peer_id_prefix],[-TR2510-])
-+m4_define([user_agent_prefix],[2.33])
-+m4_define([peer_id_prefix],[-TR2330-])
+-m4_define([user_agent_prefix],[2.61])
+-m4_define([peer_id_prefix],[-TR2610-])
++m4_define([user_agent_prefix],[2.42])
++m4_define([peer_id_prefix],[-TR2420-])
  
  AC_INIT([transmission],
          [user_agent_prefix],
-diff -ur transmission-2.41-orig/libtransmission/version.h transmission-2.41/libtransmission/version.h
---- transmission-2.41-orig/libtransmission/version.h	2011-10-11 13:08:57.982685108 +0200
-+++ transmission-2.41/libtransmission/version.h	2011-07-21 01:39:34.000000000 +0200
-@@ -1,10 +1,10 @@
--#define PEERID_PREFIX             "-TR2510-"
--#define USERAGENT_PREFIX          "2.51"
--#define SVN_REVISION              "13280"
--#define SVN_REVISION_NUM          13280
--#define SHORT_VERSION_STRING      "2.51"
--#define LONG_VERSION_STRING       "2.51 (13280)"
--#define VERSION_STRING_INFOPLIST  2.51
-+#define PEERID_PREFIX             "-TR2330-"
-+#define USERAGENT_PREFIX          "2.33"
-+#define SVN_REVISION              "12565"
-+#define SVN_REVISION_NUM          12565
-+#define SHORT_VERSION_STRING      "2.33"
-+#define LONG_VERSION_STRING       "2.33 (12565)"
-+#define VERSION_STRING_INFOPLIST  2.33
- #define MAJOR_VERSION             2
--#define MINOR_VERSION             51
-+#define MINOR_VERSION             33
- #define TR_STABLE_RELEASE         1

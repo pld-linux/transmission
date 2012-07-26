@@ -1,5 +1,6 @@
 # Conditional build:
-%bcond_with verchange     # changes client version identifiaction to 2.22
+%bcond_with verchange     # changes client version identifiaction to 2.42
+
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
@@ -126,7 +127,11 @@ mv %{name}-%{version}/* .
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%{?with_verchange:%patch4 -p1}
+%if %{with verchange}
+%patch4 -p1
+./update-version-h.sh
+%endif
+
 %{__rm} po/ckb.po
 %{__sed} -i 's/\(^CONFIG.*\)\( debug\)/\1/' qt/qtr.pro
 
