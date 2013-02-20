@@ -5,12 +5,12 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	2.76
+Version:	2.77
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.xz
-# Source0-md5:	9abbffe29ce9b5ee68a116d293c51111
+# Source0-md5:	60c0e77a1852656215f7102a437b2a3d
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
@@ -31,7 +31,7 @@ BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gtk+3-devel >= 3.4.0
 BuildRequires:	intltool >= 0.35.5
 BuildRequires:	libcanberra-gtk-devel
-BuildRequires:	libevent-devel >= 2.0.0
+BuildRequires:	libevent-devel >= 2.0.10
 BuildRequires:	libnotify-devel >= 0.4.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
