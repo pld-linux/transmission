@@ -5,12 +5,12 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	2.81
+Version:	2.82
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.xz
-# Source0-md5:	db1ad10ecff07150486dab2365ccb3a8
+# Source0-md5:	a5ef870c0410b12d10449c2d36fa4661
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
@@ -19,9 +19,11 @@ Patch2:		%{name}-cflags.patch
 Patch3:		%{name}-preallocate_syscall.patch
 Patch4:		%{name}-version.patch
 URL:		http://transmissionbt.com/
-BuildRequires:	QtDBus-devel
-BuildRequires:	QtGui-devel
-BuildRequires:	QtNetwork-devel
+BuildRequires:	Qt5Core-devel
+BuildRequires:	Qt5DBus-devel
+BuildRequires:	Qt5Gui-devel
+BuildRequires:	Qt5Network-devel
+BuildRequires:	Qt5Widgets-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	curl-devel >= 7.16.3
@@ -38,8 +40,8 @@ BuildRequires:	libtool
 BuildRequires:	lsb-release
 BuildRequires:	openssl-devel >= 0.9.4
 BuildRequires:	pkgconfig
-BuildRequires:	qt4-build
-BuildRequires:	qt4-qmake
+BuildRequires:	qt5-build
+BuildRequires:	qt5-qmake
 BuildRequires:	rpmbuild(macros) >= 1.357
 BuildRequires:	sqlite3-devel
 BuildRequires:	systemd-devel
@@ -116,12 +118,12 @@ przez użytkownika. Transmission stawia na równowagę zapewnienia
 przydatnej funkcjonalności bez nadmiaru opcji.
 
 %package gui-qt
-Summary:	A GUI to Transmission based on Qt4
+Summary:	A GUI to Transmission based on Qt5
 Group:		X11/Applications/Networking
 # doesn't require base
 
 %description gui-qt
-A GUI to Transmission based on Qt4.
+A GUI to Transmission based on Qt5.
 
 %prep
 %setup -qc
@@ -149,7 +151,7 @@ mv %{name}-%{version}/* .
 %{__make}
 
 cd qt
-qmake-qt4
+qmake-qt5
 %{__make}
 cd -
 
