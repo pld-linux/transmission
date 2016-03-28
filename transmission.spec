@@ -1,23 +1,21 @@
 # Conditional build:
-%bcond_with verchange     # changes client version identifiaction to 2.42
+%bcond_with verchange     # changes client version identification to 2.42
 
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	2.84
+Version:	2.92
 Release:	1
 License:	MIT
 Group:		Applications/Communications
-Source0:	http://download.m0k.org/transmission/files/%{name}-%{version}.tar.xz
-# Source0-md5:	411aec1c418c14f6765710d89743ae42
+Source0:	https://download.transmissionbt.com/files/%{name}-%{version}.tar.xz
+# Source0-md5:	3fce404a436e3cd7fde80fb6ed61c264
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
-Patch1:		%{name}-qtr_details.patch
-Patch2:		%{name}-cflags.patch
-Patch3:		%{name}-preallocate_syscall.patch
-Patch4:		%{name}-version.patch
+Patch1:		%{name}-cflags.patch
+Patch2:		%{name}-version.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	Qt5Core-devel
 BuildRequires:	Qt5DBus-devel
@@ -38,7 +36,7 @@ BuildRequires:	libnotify-devel >= 0.4.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	lsb-release
-BuildRequires:	openssl-devel >= 0.9.4
+BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	pkgconfig
 BuildRequires:	qt5-build
 BuildRequires:	qt5-qmake
@@ -50,6 +48,7 @@ BuildRequires:	util-linux
 BuildRequires:	which
 BuildRequires:	xfsprogs-devel
 BuildRequires:	xz
+BuildRequires:	zlib-devel >= 1.2.3
 Obsoletes:	Transmission <= 1.05
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -130,10 +129,8 @@ A GUI to Transmission based on Qt5.
 mv %{name}-%{version}/* .
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %if %{with verchange}
-%patch4 -p1
+%patch2 -p1
 ./update-version-h.sh
 %endif
 
@@ -147,7 +144,8 @@ mv %{name}-%{version}/* .
 %{__automake}
 %configure \
 	--with-gtk \
-	--disable-silent-rules
+	--disable-silent-rules \
+	--enable-cli
 %{__make}
 
 cd qt
