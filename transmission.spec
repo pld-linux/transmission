@@ -6,7 +6,7 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	2.92
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://download.transmissionbt.com/files/%{name}-%{version}.tar.xz
@@ -14,7 +14,6 @@ Source0:	https://download.transmissionbt.com/files/%{name}-%{version}.tar.xz
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
-Patch1:		%{name}-cflags.patch
 Patch2:		%{name}-version.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	Qt5Core-devel
@@ -128,7 +127,6 @@ A GUI to Transmission based on Qt5.
 %setup -qc
 mv %{name}-%{version}/* .
 %patch0 -p1
-%patch1 -p1
 %if %{with verchange}
 %patch2 -p1
 ./update-version-h.sh
@@ -138,10 +136,6 @@ mv %{name}-%{version}/* .
 %{__sed} -i 's/\(^CONFIG.*\)\( debug\)/\1/' qt/qtr.pro
 
 %build
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__automake}
 %configure \
 	--with-gtk \
 	--disable-silent-rules \
