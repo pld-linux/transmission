@@ -1,12 +1,13 @@
+#
 # Conditional build:
-%bcond_with verchange     # changes client version identification to 2.42
+%bcond_with	verchange	# changes client version identification to 2.42
 
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	2.94
-Release:	2
+Release:	3
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://github.com/transmission/transmission-releases/raw/master/%{name}-%{version}.tar.xz
@@ -74,16 +75,16 @@ przez użytkownika. Transmission stawia na równowagę zapewnienia
 przydatnej funkcjonalności bez nadmiaru opcji.
 
 %package init
-Summary:	daemon package for BitTorrent client
+Summary:	Daemon package for BitTorrent client
+Summary(pl.UTF-8):	Pakiet demona dla klienta BitTorrenta
 Group:		Networking/Daemons
 Requires:	%{name} = %{version}-%{release}
 
 %description init
-Transmission has been built from the ground up to be a lightweight,
-yet powerful BitTorrent client. Its simple, intuitive interface is
-designed to integrate tightly with whatever computing environment you
-choose to use. Transmission strikes a balance between providing useful
-functionality without feature bloat.
+Daemon package for BitTorrent client.
+
+%description init -l pl.UTF-8
+Pakiet demona dla klienta BitTorrenta.
 
 %package gui
 Summary:	A versatile and multi-platform BitTorrent client
@@ -116,16 +117,20 @@ przez użytkownika. Transmission stawia na równowagę zapewnienia
 przydatnej funkcjonalności bez nadmiaru opcji.
 
 %package gui-qt
-Summary:	A GUI to Transmission based on Qt5
+Summary:	A GUI to Transmission based on Qt 5
+Summary(pl.UTF-8):	Graficzny interfejs do Transmission oparty na Qt 5
 Group:		X11/Applications/Networking
 # doesn't require base
 
 %description gui-qt
-A GUI to Transmission based on Qt5.
+A GUI to Transmission based on Qt 5.
+
+%description gui-qt -l pl.UTF-8
+Graficzny interfejs do Transmission oparty na Qt 5.
 
 %prep
 %setup -qc
-mv %{name}-%{version}/* .
+%{__mv} %{name}-%{version}/* .
 %patch0 -p1
 %if %{with verchange}
 %patch2 -p1
@@ -163,13 +168,7 @@ install qt/transmission-qt $RPM_BUILD_ROOT%{_bindir}
 install qt/transmission-qt.desktop $RPM_BUILD_ROOT%{_desktopdir}
 install gtk/transmission.png $RPM_BUILD_ROOT%{_pixmapsdir}/transmission-qt.png
 
-# unsupported
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/eu
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/mr
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/pa
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/tl
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ur
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ta_LK
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/{ta_LK,ta}
 
 %find_lang %{name} --all-name --with-gnome
 
