@@ -1,5 +1,7 @@
 #
 # Conditional build:
+%bcond_without	gtk		# without GTK GUI
+%bcond_without	qt		# without Qt GUI
 %bcond_with	verchange	# changes client version identification to 2.42
 
 %define		qtver	5.2
@@ -19,17 +21,14 @@ Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
 Patch2:		%{name}-version.patch
 URL:		http://transmissionbt.com/
-BuildRequires:	Qt5Core-devel >= %{qtver}
-BuildRequires:	Qt5DBus-devel >= %{qtver}
-BuildRequires:	Qt5Gui-devel >= %{qtver}
-BuildRequires:	Qt5Network-devel >= %{qtver}
-BuildRequires:	Qt5Widgets-devel >= %{qtver}
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	curl-devel >= 7.16.3
 BuildRequires:	gettext-tools
+%if %{with gtk}
 BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gtk+3-devel >= 3.4.0
+%endif
 BuildRequires:	intltool >= 0.35.5
 BuildRequires:	libevent-devel >= 2.0.10
 BuildRequires:	libnatpmp-devel
@@ -39,8 +38,6 @@ BuildRequires:	lsb-release
 BuildRequires:	miniupnpc-devel >= 1.7
 BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	pkgconfig
-BuildRequires:	qt5-build >= %{qtver}
-BuildRequires:	qt5-qmake >= %{qtver}
 BuildRequires:	rpmbuild(macros) >= 1.357
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
@@ -49,6 +46,15 @@ BuildRequires:	which
 BuildRequires:	xfsprogs-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel >= 1.2.3
+%if %{with qt}
+BuildRequires:	Qt5Core-devel >= %{qtver}
+BuildRequires:	Qt5DBus-devel >= %{qtver}
+BuildRequires:	Qt5Gui-devel >= %{qtver}
+BuildRequires:	Qt5Network-devel >= %{qtver}
+BuildRequires:	Qt5Widgets-devel >= %{qtver}
+BuildRequires:	qt5-build >= %{qtver}
+BuildRequires:	qt5-qmake >= %{qtver}
+%endif
 Requires:	curl-libs >= 7.16.3
 Requires:	libevent >= 2.0.10
 Requires:	miniupnpc >= 1.7
@@ -154,16 +160,18 @@ Graficzny interfejs do Transmission oparty na Qt 5.
 
 %build
 %configure \
-	--with-gtk \
+	%{__with_without gtk} \
 	--disable-silent-rules \
 	--enable-cli \
 	--enable-external-natpmp
 %{__make}
 
+%if %{with qt}
 cd qt
 qmake-qt5
 %{__make}
 cd -
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -177,13 +185,16 @@ install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d} \
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 
+%if %{with qt}
 install qt/transmission-qt $RPM_BUILD_ROOT%{_bindir}
 install qt/transmission-qt.desktop $RPM_BUILD_ROOT%{_desktopdir}
 install gtk/transmission.png $RPM_BUILD_ROOT%{_pixmapsdir}/transmission-qt.png
-
+%endif
+%if %{with gtk}
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/jbo
 
 %find_lang %{name} --all-name --with-gnome
+%endif
 
 # copy of GPLv2 not needed
 %{__rm} $RPM_BUILD_ROOT%{_appdir}/LICENSE
@@ -209,7 +220,7 @@ fi
 %update_desktop_database_postun
 %update_icon_cache hicolor
 
-%files -f %{name}.lang
+%files %{?with_gtk:-f %{name}.lang}
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS.md README.md
 %attr(755,root,root) %{_bindir}/transmission-cli
@@ -239,6 +250,7 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(750,daemon,root) %dir /var/lib/%{name}
 
+%if %{with gtk}
 %files gui
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/transmission-gtk
@@ -247,9 +259,12 @@ fi
 %{_pixmapsdir}/transmission.png
 %{_iconsdir}/hicolor/*/apps/transmission.svg
 %{_datadir}/appdata/transmission-gtk.appdata.xml
+%endif
 
+%if %{with qt}
 %files gui-qt
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/transmission-qt
 %{_desktopdir}/transmission-qt.desktop
 %{_pixmapsdir}/transmission-qt.png
+%endif
