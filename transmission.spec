@@ -220,7 +220,7 @@ fi
 %update_desktop_database_postun
 %update_icon_cache hicolor
 
-%files %{?with_gtk:-f %{name}.lang}
+%files
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS.md README.md
 %attr(755,root,root) %{_bindir}/transmission-cli
@@ -251,7 +251,7 @@ fi
 %attr(750,daemon,root) %dir /var/lib/%{name}
 
 %if %{with gtk}
-%files gui
+%files gui -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/transmission-gtk
 %{_mandir}/man1/transmission-gtk.1*
