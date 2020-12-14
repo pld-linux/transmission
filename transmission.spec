@@ -235,8 +235,7 @@ Utilities for Transmission BitTorrent client.
 Narzędzia dla klienta BitTorrenta Transmission.
 
 %prep
-%setup -qc
-%{__mv} %{name}-%{version}/* .
+%setup -q
 %patch0 -p1
 %if %{with verchange}
 %patch2 -p1
