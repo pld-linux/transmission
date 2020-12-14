@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	gtk		# without GTK GUI
 %bcond_without	qt		# without Qt GUI
+%bcond_without	systemd		# without systemd unit
 %bcond_with	verchange	# changes client version identification to 2.42
 
 %define		qtver	5.2
@@ -135,6 +136,7 @@ Requires:	curl-libs >= 7.16.3
 Requires:	libevent >= 2.0.10
 Requires:	miniupnpc >= 1.7
 Requires:	openssl >= 0.9.7
+%{?with_systemd:Requires:	systemd-units >= 38}
 Requires:	zlib >= 1.2.3
 Obsoletes:	Transmission <= 1.05
 Obsoletes:	transmission < 3.00-2
@@ -264,13 +266,18 @@ cd -
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/%{name} \
-	$RPM_BUILD_ROOT/var/lib/%{name}
+	$RPM_BUILD_ROOT/var/lib/%{name} \
+	%{?with_systemd:$RPM_BUILD_ROOT%{systemdunitdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+
+%if %{with systemd}
+cp -p daemon/transmission-daemon.service $RPM_BUILD_ROOT%{systemdunitdir}
+%endif
 
 %if %{with qt}
 install qt/transmission-qt $RPM_BUILD_ROOT%{_bindir}
@@ -292,12 +299,17 @@ rm -rf $RPM_BUILD_ROOT
 %post daemon
 /sbin/chkconfig --add transmission
 %service transmission restart
+%{?with_systemd:%systemd_post transmission-daemon.service}
 
 %preun daemon
 if [ "$1" = "0" ]; then
         %service transmission stop
         /sbin/chkconfig --del transmission
 fi
+%{?with_systemd:%systemd_preun transmission-daemon.service}
+
+%postun daemon
+%{?with_systemd:%systemd_reload}
 
 %post gui
 %update_desktop_database_post
@@ -328,6 +340,7 @@ fi
 %attr(640,root,daemon) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(755,root,root) %{_bindir}/transmission-daemon
+%{?with_systemd:%{systemdunitdir}/transmission-daemon.service}
 %{_mandir}/man1/transmission-daemon.1*
 %attr(750,daemon,root) %dir /var/lib/%{name}
 
