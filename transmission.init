@@ -46,7 +46,7 @@ start() {
 	fi
 
 	msg_starting transmission
-	daemon --user daemon \
+	daemon --user transmission \
 		/usr/bin/transmission-daemon -g /etc/transmission \
 		-c $TORRENTS -w $DOWNLOADS \
 		$OPTIONS

@@ -138,6 +138,8 @@ Requires:	miniupnpc >= 1.7
 Requires:	openssl >= 0.9.7
 %{?with_systemd:Requires:	systemd-units >= 38}
 Requires:	zlib >= 1.2.3
+Provides:	group(transmission)
+Provides:	user(transmission)
 Obsoletes:	Transmission <= 1.05
 Obsoletes:	transmission < 3.00-2
 Obsoletes:	transmission-init < 3.00-2
@@ -296,6 +298,15 @@ install gtk/transmission.png $RPM_BUILD_ROOT%{_pixmapsdir}/transmission-qt.png
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%triggerpostun daemon -- transmission < 3.00-2
+if [ -d /var/lib/transmission ] ; then
+	chown -R transmission:transmission /var/lib/transmission || :
+fi
+
+%pre daemon
+%groupadd -g 339 transmission
+%useradd -u 339 -r -d /var/lib/transmission -s /bin/false -c "Transmission user" -g transmission transmission
+
 %post daemon
 /sbin/chkconfig --add transmission
 %service transmission restart
@@ -309,6 +320,10 @@ fi
 %{?with_systemd:%systemd_preun transmission-daemon.service}
 
 %postun daemon
+if [ "$1" = "0" ]; then
+	%userremove transmission
+	%groupremove transmission
+fi
 %{?with_systemd:%systemd_reload}
 
 %post gui
@@ -342,7 +357,7 @@ fi
 %attr(755,root,root) %{_bindir}/transmission-daemon
 %{?with_systemd:%{systemdunitdir}/transmission-daemon.service}
 %{_mandir}/man1/transmission-daemon.1*
-%attr(750,daemon,root) %dir /var/lib/%{name}
+%attr(750,transmission,transmission) %dir /var/lib/%{name}
 
 %if %{with gtk}
 %files gui -f %{name}.lang
