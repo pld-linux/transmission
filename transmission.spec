@@ -119,7 +119,7 @@ Implementacja w wierszu poleceń dla klienta BitTorrenta.
 Summary:	Common files for Transmission BitTorrent client
 Summary(pl.UTF-8):	Pliki wspólne dla klienta BitTorrenta Transmission
 Group:		Applications/Networking
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description common
 Common files for Transmission BitTorrent client.
