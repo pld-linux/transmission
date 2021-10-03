@@ -1,12 +1,12 @@
-diff -uNr transmission-2.50/po/LINGUAS transmission-2.50.new/po/LINGUAS
---- transmission-2.50/po/LINGUAS	2012-02-15 03:01:09.420060208 +0100
-+++ transmission-2.50.new/po/LINGUAS	2012-02-23 11:54:26.284957426 +0100
-@@ -12,8 +12,6 @@
+diff -urNp -x '*.orig' transmission-3.00.org/po/LINGUAS transmission-3.00/po/LINGUAS
+--- transmission-3.00.org/po/LINGUAS	2020-05-22 13:04:23.440805226 +0200
++++ transmission-3.00/po/LINGUAS	2021-10-03 21:28:26.240286367 +0200
+@@ -11,8 +11,6 @@ br
  bs
  ca
  ca@valencia
 -ceb
 -ckb
  cs
+ cy
  da
- de

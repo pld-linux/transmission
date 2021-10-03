@@ -12,7 +12,7 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	3.00
-Release:	2
+Release:	3
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://github.com/transmission/transmission-releases/raw/master/%{name}-%{version}.tar.xz
@@ -367,6 +367,7 @@ fi
 %{_desktopdir}/transmission-gtk.desktop
 %{_pixmapsdir}/transmission.png
 %{_iconsdir}/hicolor/*/apps/transmission.svg
+%{_iconsdir}/hicolor/symbolic/apps/transmission-symbolic.svg
 %{_datadir}/appdata/transmission-gtk.appdata.xml
 %endif
 
