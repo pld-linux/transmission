@@ -1,0 +1,23 @@
+--- transmission-3.00/libtransmission/crypto-utils-openssl.c.orig	2020-05-22 13:04:23.386804824 +0200
++++ transmission-3.00/libtransmission/crypto-utils-openssl.c	2021-10-16 18:32:47.294590906 +0200
+@@ -17,6 +17,9 @@
+ #include <openssl/err.h>
+ #include <openssl/evp.h>
+ #include <openssl/opensslv.h>
++#if defined(OPENSSL_VERSION_MAJOR) && (OPENSSL_VERSION_MAJOR >= 3)
++#include <openssl/provider.h>
++#endif
+ #include <openssl/rand.h>
+ #include <openssl/ssl.h>
+ #include <openssl/x509.h>
+@@ -184,6 +187,10 @@
+ 
+ tr_rc4_ctx_t tr_rc4_new(void)
+ {
++#if defined(OPENSSL_VERSION_MAJOR) && (OPENSSL_VERSION_MAJOR >= 3)
++    if (OSSL_PROVIDER_load(NULL, "legacy") == NULL)
++        return NULL;
++#endif
+     EVP_CIPHER_CTX* handle = EVP_CIPHER_CTX_new();
+ 
+     if (check_result(EVP_CipherInit_ex(handle, EVP_rc4(), NULL, NULL, NULL, -1)))

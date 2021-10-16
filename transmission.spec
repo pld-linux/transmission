@@ -12,7 +12,7 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	3.00
-Release:	3
+Release:	4
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://github.com/transmission/transmission-releases/raw/master/%{name}-%{version}.tar.xz
@@ -20,6 +20,7 @@ Source0:	https://github.com/transmission/transmission-releases/raw/master/%{name
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch0:		%{name}-ckb_po.patch
+Patch1:		openssl3.patch
 Patch2:		%{name}-version.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	autoconf
@@ -241,6 +242,7 @@ Narzędzia dla klienta BitTorrenta Transmission.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 %if %{with verchange}
 %patch2 -p1
 ./update-version-h.sh
