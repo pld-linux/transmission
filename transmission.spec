@@ -1,63 +1,78 @@
 #
 # Conditional build:
 %bcond_without	gtk		# without GTK GUI
+%bcond_with	gtk4		# use GTK4 for GTK GUI
 %bcond_without	qt		# without Qt GUI
+%bcond_with	qt6		# use Qt6 for Qt GUI
 %bcond_without	systemd		# without systemd unit
 
-%define		qtver	5.2
+%define		qtver	5.6
 
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	3.00
-Release:	4
+Version:	4.0.0
+Release:	1
 License:	MIT
 Group:		Applications/Communications
-Source0:	https://github.com/transmission/transmission-releases/raw/master/%{name}-%{version}.tar.xz
-# Source0-md5:	a23a32672b83c89b9b61e90408f53d98
+Source0:	https://github.com/transmission/transmission/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	d73915000cf2871404b45a64969cea83
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
-Patch1:		openssl3.patch
+Patch0:		werror.patch
 URL:		http://transmissionbt.com/
-BuildRequires:	autoconf
-BuildRequires:	automake >= 1:1.9
-BuildRequires:	curl-devel >= 7.16.3
+BuildRequires:	cmake >= 3.12
+BuildRequires:	curl-devel >= 7.28.0
 BuildRequires:	gettext-tools
 %if %{with gtk}
-BuildRequires:	glib2-devel >= 1:2.32.0
-BuildRequires:	gtk+3-devel >= 3.4.0
+%if %{with gtk4}
+BuildRequires:	glibmm2.68-devel >= 2.60.0
+BuildRequires:	gtkmm4-devel >= 3.24.0
+%else
+BuildRequires:	glibmm-devel >= 2.60.0
+BuildRequires:	gtkmm3-devel >= 3.24.0
+BuildRequires:	libayatana-appindicator-gtk3-devel
 %endif
-BuildRequires:	intltool >= 0.35.5
-BuildRequires:	libevent-devel >= 2.0.10
+%endif
+BuildRequires:	libb64-devel
+BuildRequires:	libdeflate-devel >= 1.10
+BuildRequires:	libevent-devel >= 2.1.0
 BuildRequires:	libnatpmp-devel
-BuildRequires:	libstdc++-devel
-BuildRequires:	libtool
+BuildRequires:	libpsl-devel >= 0.21.1
+BuildRequires:	libstdc++-devel >= 6:5
 BuildRequires:	lsb-release
 BuildRequires:	miniupnpc-devel >= 1.7
 BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.357
-BuildRequires:	systemd-devel
+BuildRequires:	rpmbuild(macros) >= 1.742
+%{?with_systemd:BuildRequires:	systemd-devel}
 BuildRequires:	tar >= 1:1.22
-BuildRequires:	util-linux
-BuildRequires:	which
 BuildRequires:	xfsprogs-devel
 BuildRequires:	xz
-BuildRequires:	zlib-devel >= 1.2.3
 %if %{with qt}
+%if %{with qt6}
+BuildRequires:	Qt6Core-devel >= %{qtver}
+BuildRequires:	Qt6DBus-devel >= %{qtver}
+BuildRequires:	Qt6Gui-devel >= %{qtver}
+BuildRequires:	Qt6Network-devel >= %{qtver}
+BuildRequires:	Qt6Svg-devel >= %{qtver}
+BuildRequires:	Qt6Widgets-devel >= %{qtver}
+BuildRequires:	qt6-build >= %{qtver}
+BuildRequires:	qt6-linguist >= %{qtver}
+%else
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5DBus-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel >= %{qtver}
 BuildRequires:	Qt5Network-devel >= %{qtver}
+BuildRequires:	Qt5Svg-devel >= %{qtver}
 BuildRequires:	Qt5Widgets-devel >= %{qtver}
 BuildRequires:	qt5-build >= %{qtver}
-BuildRequires:	qt5-qmake >= %{qtver}
+BuildRequires:	qt5-linguist >= %{qtver}
+%endif
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_appdir		%{_datadir}/%{name}/web
 
 %description
 Transmission has been built from the ground up to be a lightweight,
@@ -84,11 +99,12 @@ Summary:	Command line implementation for BitTorrent client
 Summary(pl.UTF-8):	Implementacja w wierszu poleceń dla klienta BitTorrenta
 Group:		Applications/Networking
 Requires:	%{name}-common = %{version}-%{release}
-Requires:	curl-libs >= 7.16.3
-Requires:	libevent >= 2.0.10
+Requires:	curl-libs >= 7.28.0
+Requires:	libdeflate >= 1.10
+Requires:	libevent >= 2.1.0
+Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
 Requires:	openssl >= 0.9.7
-Requires:	zlib >= 1.2.3
 
 %description cli
 Transmission has been built from the ground up to be a lightweight,
@@ -131,12 +147,13 @@ Summary:	Daemon package for BitTorrent client
 Summary(pl.UTF-8):	Pakiet demona dla klienta BitTorrenta
 Group:		Networking/Daemons
 Requires:	%{name}-common = %{version}-%{release}
-Requires:	curl-libs >= 7.16.3
-Requires:	libevent >= 2.0.10
+Requires:	curl-libs >= 7.28.0
+Requires:	libdeflate >= 1.10
+Requires:	libevent >= 2.1.0
+Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
 Requires:	openssl >= 0.9.7
 %{?with_systemd:Requires:	systemd-units >= 38}
-Requires:	zlib >= 1.2.3
 Provides:	group(transmission)
 Provides:	user(transmission)
 Obsoletes:	Transmission <= 1.05
@@ -174,14 +191,20 @@ Group:		X11/Applications/Networking
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	%{name}-common = %{version}-%{release}
-Requires:	curl-libs >= 7.16.3
-Requires:	glib2 >= 1:2.32.0
-Requires:	gtk+3 >= 3.4.0
+Requires:	curl-libs >= 7.28.0
+%if %{with gtk4}
+Requires:	glibmm2.68 >= 2.60.0
+Requires:	gtkmm4 >= 3.24.0
+%else
+Requires:	glibmm >= 2.60.0
+Requires:	gtkmm3 >= 3.24.0
+%endif
 Requires:	libcanberra-gtk3
-Requires:	libevent >= 2.0.10
+Requires:	libdeflate >= 1.10
+Requires:	libevent >= 2.1.0
+Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
 Requires:	openssl >= 0.9.7
-Requires:	zlib >= 1.2.3
 
 %description gui
 Transmission has been built from the ground up to be a lightweight,
@@ -208,17 +231,28 @@ Summary:	A GUI to Transmission based on Qt 5
 Summary(pl.UTF-8):	Graficzny interfejs do Transmission oparty na Qt 5
 Group:		X11/Applications/Networking
 Requires:	%{name}-common = %{version}-%{release}
+%if %{with qt6}
+Requires:	Qt6Core >= %{qtver}
+Requires:	Qt6DBus >= %{qtver}
+Requires:	Qt6Gui >= %{qtver}
+Requires:	Qt6Network >= %{qtver}
+Requires:	Qt6Svg >= %{qtver}
+Requires:	Qt6Widgets >= %{qtver}
+%else
 Requires:	Qt5Core >= %{qtver}
 Requires:	Qt5DBus >= %{qtver}
 Requires:	Qt5Gui >= %{qtver}
 Requires:	Qt5Network >= %{qtver}
+Requires:	Qt5Svg >= %{qtver}
 Requires:	Qt5Widgets >= %{qtver}
-Requires:	curl-libs >= 7.16.3
+%endif
+Requires:	curl-libs >= 7.28.0
 Requires:	libcanberra-gtk3
-Requires:	libevent >= 2.0.10
+Requires:	libdeflate >= 1.10
+Requires:	libevent >= 2.1.0
+Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
 Requires:	openssl >= 0.9.7
-Requires:	zlib >= 1.2.3
 
 %description gui-qt
 A GUI to Transmission based on Qt 5.
@@ -239,24 +273,22 @@ Narzędzia dla klienta BitTorrenta Transmission.
 
 %prep
 %setup -q
-%patch1 -p1
-
-%{__sed} -i 's/\(^CONFIG.*\)\( debug\)/\1/' qt/qtr.pro
+%patch0 -p1
 
 %build
-%configure \
-	%{__with_without gtk} \
-	--disable-silent-rules \
-	--enable-cli \
-	--enable-external-natpmp
-%{__make}
+install -d build
+cd build
+%cmake .. \
+	-DENABLE_CLI:BOOL=ON \
+	-DENABLE_WEB:BOOL=OFF \
+	%{cmake_on_off gtk ENABLE_GTK} \
+	-DUSE_GTK_VERSION=%{?with_gtk4:4}%{!?with_gtk4:3} \
+	%{cmake_on_off qt ENABLE_QT} \
+	-DUSE_QT_VERSION=%{?with_qt6:6}%{!?with_qt6:5} \
+	%{cmake_on_off systemd ENABLE_SYSTEMD} \
+	-DUSE_SYSTEM_UTP:BOOL=OFF
 
-%if %{with qt}
-cd qt
-qmake-qt5
 %{__make}
-cd -
-%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -265,7 +297,7 @@ install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d} \
 	$RPM_BUILD_ROOT/var/lib/%{name} \
 	%{?with_systemd:$RPM_BUILD_ROOT%{systemdunitdir}}
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
@@ -275,19 +307,18 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 cp -p daemon/transmission-daemon.service $RPM_BUILD_ROOT%{systemdunitdir}
 %endif
 
-%if %{with qt}
-install qt/transmission-qt $RPM_BUILD_ROOT%{_bindir}
-install qt/transmission-qt.desktop $RPM_BUILD_ROOT%{_desktopdir}
-install gtk/transmission.png $RPM_BUILD_ROOT%{_pixmapsdir}/transmission-qt.png
-%endif
 %if %{with gtk}
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ceb,jbo}
 
 %find_lang %{name} --all-name --with-gnome
 %endif
 
+%if %{with qt}
+%find_lang %{name} --with-qm -o %{name}-qt.lang
+%endif
+
 # copy of GPLv2 not needed
-%{__rm} $RPM_BUILD_ROOT%{_appdir}/LICENSE
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/%{name}/public_html/transmission-app.js.LICENSE.txt
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -335,13 +366,9 @@ fi
 
 %files common
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS.md README.md
+%doc AUTHORS README.md
 %dir %{_datadir}/%{name}
-%dir %{_appdir}
-%{_appdir}/images
-%{_appdir}/javascript
-%{_appdir}/style
-%{_appdir}/index.html
+%{_datadir}/%{name}/public_html
 
 %files daemon
 %defattr(644,root,root,755)
@@ -359,18 +386,18 @@ fi
 %attr(755,root,root) %{_bindir}/transmission-gtk
 %{_mandir}/man1/transmission-gtk.1*
 %{_desktopdir}/transmission-gtk.desktop
-%{_pixmapsdir}/transmission.png
-%{_iconsdir}/hicolor/*/apps/transmission.svg
+%{_iconsdir}/hicolor/scalable/apps/transmission.svg
+%{_iconsdir}/hicolor/scalable/apps/transmission-devel.svg
 %{_iconsdir}/hicolor/symbolic/apps/transmission-symbolic.svg
-%{_datadir}/appdata/transmission-gtk.appdata.xml
+%{_datadir}/metainfo/transmission-gtk.metainfo.xml
 %endif
 
 %if %{with qt}
-%files gui-qt
+%files gui-qt -f %{name}-qt.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/transmission-qt
 %{_desktopdir}/transmission-qt.desktop
-%{_pixmapsdir}/transmission-qt.png
+%{_mandir}/man1/transmission-qt.1*
 %endif
 
 %files utils

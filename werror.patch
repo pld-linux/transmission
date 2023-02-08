@@ -1,0 +1,11 @@
+--- transmission-4.0.0/third-party/libutp/CMakeLists.txt.orig	2023-01-20 01:46:17.000000000 +0100
++++ transmission-4.0.0/third-party/libutp/CMakeLists.txt	2023-02-08 18:45:55.523601765 +0100
+@@ -7,7 +7,7 @@
+ endif()
+ 
+ option(LIBUTP_ENABLE_INSTALL "${PROJECT_NAME}: Enable install" ${LIBUTP_STANDALONE_BUILD})
+-option(LIBUTP_ENABLE_WERROR "${PROJECT_NAME}: Treat warnings as errors" ${LIBUTP_STANDALONE_BUILD})
++option(LIBUTP_ENABLE_WERROR "${PROJECT_NAME}: Treat warnings as errors" OFF)
+ option(LIBUTP_BUILD_PROGRAMS "${PROJECT_NAME}: Build programs" ${LIBUTP_STANDALONE_BUILD})
+ 
+ if(LIBUTP_ENABLE_INSTALL)
