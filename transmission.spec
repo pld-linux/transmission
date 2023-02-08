@@ -3,7 +3,6 @@
 %bcond_without	gtk		# without GTK GUI
 %bcond_without	qt		# without Qt GUI
 %bcond_without	systemd		# without systemd unit
-%bcond_with	verchange	# changes client version identification to 2.42
 
 %define		qtver	5.2
 
@@ -20,7 +19,6 @@ Source0:	https://github.com/transmission/transmission-releases/raw/master/%{name
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Patch1:		openssl3.patch
-Patch2:		%{name}-version.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1:1.9
@@ -241,10 +239,6 @@ Narzędzia dla klienta BitTorrenta Transmission.
 %prep
 %setup -q
 %patch1 -p1
-%if %{with verchange}
-%patch2 -p1
-./update-version-h.sh
-%endif
 
 %{__sed} -i 's/\(^CONFIG.*\)\( debug\)/\1/' qt/qtr.pro
 
