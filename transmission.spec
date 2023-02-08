@@ -19,7 +19,6 @@ Source0:	https://github.com/transmission/transmission-releases/raw/master/%{name
 # Source0-md5:	a23a32672b83c89b9b61e90408f53d98
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
-Patch0:		%{name}-ckb_po.patch
 Patch1:		openssl3.patch
 Patch2:		%{name}-version.patch
 URL:		http://transmissionbt.com/
@@ -241,14 +240,12 @@ Narzędzia dla klienta BitTorrenta Transmission.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 %if %{with verchange}
 %patch2 -p1
 ./update-version-h.sh
 %endif
 
-%{__rm} po/ckb.po
 %{__sed} -i 's/\(^CONFIG.*\)\( debug\)/\1/' qt/qtr.pro
 
 %build
@@ -289,7 +286,7 @@ install qt/transmission-qt.desktop $RPM_BUILD_ROOT%{_desktopdir}
 install gtk/transmission.png $RPM_BUILD_ROOT%{_pixmapsdir}/transmission-qt.png
 %endif
 %if %{with gtk}
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/jbo
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ceb,jbo}
 
 %find_lang %{name} --all-name --with-gnome
 %endif
