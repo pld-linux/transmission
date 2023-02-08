@@ -37,6 +37,7 @@ BuildRequires:	lsb-release
 BuildRequires:	miniupnpc-devel >= 1.7
 BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.357
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
