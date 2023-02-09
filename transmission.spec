@@ -13,7 +13,7 @@ Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
 Version:	4.0.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://github.com/transmission/transmission/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -308,7 +308,7 @@ cp -p daemon/transmission-daemon.service $RPM_BUILD_ROOT%{systemdunitdir}
 %endif
 
 %if %{with gtk}
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ceb,jbo}
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ceb,jbo,pt_PT}
 
 %find_lang %{name} --all-name --with-gnome
 %endif
