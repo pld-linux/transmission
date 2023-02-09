@@ -396,6 +396,7 @@ fi
 %files gui-qt -f %{name}-qt.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/transmission-qt
+%dir %{_datadir}/%{name}/translations
 %{_desktopdir}/transmission-qt.desktop
 %{_mandir}/man1/transmission-qt.1*
 %endif
