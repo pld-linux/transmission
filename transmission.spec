@@ -12,15 +12,14 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	4.0.0
-Release:	2
+Version:	4.0.1
+Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://github.com/transmission/transmission/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	d73915000cf2871404b45a64969cea83
+# Source0-md5:	29521f4373900a3077849e41b16801f9
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
-Patch0:		werror.patch
 URL:		http://transmissionbt.com/
 BuildRequires:	cmake >= 3.12
 BuildRequires:	curl-devel >= 7.28.0
@@ -36,7 +35,7 @@ BuildRequires:	libayatana-appindicator-gtk3-devel
 %endif
 %endif
 BuildRequires:	libb64-devel
-BuildRequires:	libdeflate-devel >= 1.10
+BuildRequires:	libdeflate-devel >= 1.7
 BuildRequires:	libevent-devel >= 2.1.0
 BuildRequires:	libnatpmp-devel
 BuildRequires:	libpsl-devel >= 0.21.1
@@ -100,7 +99,7 @@ Summary(pl.UTF-8):	Implementacja w wierszu poleceń dla klienta BitTorrenta
 Group:		Applications/Networking
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	curl-libs >= 7.28.0
-Requires:	libdeflate >= 1.10
+Requires:	libdeflate >= 1.7
 Requires:	libevent >= 2.1.0
 Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
@@ -148,7 +147,7 @@ Summary(pl.UTF-8):	Pakiet demona dla klienta BitTorrenta
 Group:		Networking/Daemons
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	curl-libs >= 7.28.0
-Requires:	libdeflate >= 1.10
+Requires:	libdeflate >= 1.7
 Requires:	libevent >= 2.1.0
 Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
@@ -200,7 +199,7 @@ Requires:	glibmm >= 2.60.0
 Requires:	gtkmm3 >= 3.24.0
 %endif
 Requires:	libcanberra-gtk3
-Requires:	libdeflate >= 1.10
+Requires:	libdeflate >= 1.7
 Requires:	libevent >= 2.1.0
 Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
@@ -248,7 +247,7 @@ Requires:	Qt5Widgets >= %{qtver}
 %endif
 Requires:	curl-libs >= 7.28.0
 Requires:	libcanberra-gtk3
-Requires:	libdeflate >= 1.10
+Requires:	libdeflate >= 1.7
 Requires:	libevent >= 2.1.0
 Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
@@ -273,20 +272,17 @@ Narzędzia dla klienta BitTorrenta Transmission.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 install -d build
 cd build
 %cmake .. \
 	-DENABLE_CLI:BOOL=ON \
-	-DENABLE_WEB:BOOL=OFF \
 	%{cmake_on_off gtk ENABLE_GTK} \
 	-DUSE_GTK_VERSION=%{?with_gtk4:4}%{!?with_gtk4:3} \
 	%{cmake_on_off qt ENABLE_QT} \
 	-DUSE_QT_VERSION=%{?with_qt6:6}%{!?with_qt6:5} \
-	%{cmake_on_off systemd ENABLE_SYSTEMD} \
-	-DUSE_SYSTEM_UTP:BOOL=OFF
+	%{cmake_on_off systemd ENABLE_SYSTEMD}
 
 %{__make}
 
