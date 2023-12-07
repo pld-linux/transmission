@@ -12,12 +12,12 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	4.0.4
+Version:	4.0.5
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://github.com/transmission/transmission/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	a9985ff897d060d40b80e763263ffaf9
+# Source0-md5:	d3cda868215246644c429b18a30f7e47
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 URL:		http://transmissionbt.com/
@@ -313,8 +313,6 @@ cp -p daemon/transmission-daemon.service $RPM_BUILD_ROOT%{systemdunitdir}
 %find_lang %{name} --with-qm -o %{name}-qt.lang
 %endif
 
-# copy of GPLv2 not needed
-%{__rm} $RPM_BUILD_ROOT%{_datadir}/%{name}/public_html/transmission-app.js.LICENSE.txt
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -335,8 +333,8 @@ fi
 
 %preun daemon
 if [ "$1" = "0" ]; then
-        %service transmission stop
-        /sbin/chkconfig --del transmission
+	%service transmission stop
+	/sbin/chkconfig --del transmission
 fi
 %{?with_systemd:%systemd_preun transmission-daemon.service}
 
