@@ -12,12 +12,12 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	4.0.5
+Version:	4.0.6
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://github.com/transmission/transmission/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	d3cda868215246644c429b18a30f7e47
+# Source0-md5:	8132b9f012b8e6309911c80ee9fd00f7
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 URL:		http://transmissionbt.com/
