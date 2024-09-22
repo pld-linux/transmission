@@ -1,0 +1,18 @@
+--- transmission-4.0.6/libtransmission/port-forwarding-upnp.cc.orig	2024-05-29 03:38:35.000000000 +0200
++++ transmission-4.0.6/libtransmission/port-forwarding-upnp.cc	2024-09-22 21:53:21.596967320 +0200
+@@ -275,8 +275,13 @@ tr_port_forwarding_state tr_upnpPulse(tr
+ 
+         FreeUPNPUrls(&handle->urls);
+         auto lanaddr = std::array<char, TR_ADDRSTRLEN>{};
+-        if (UPNP_GetValidIGD(devlist, &handle->urls, &handle->data, std::data(lanaddr), std::size(lanaddr) - 1) ==
+-            UPNP_IGD_VALID_CONNECTED)
++        if (
++#if (MINIUPNPC_API_VERSION >= 18)
++	    UPNP_GetValidIGD(devlist, &handle->urls, &handle->data, std::data(lanaddr), std::size(lanaddr) - 1, NULL, 0)
++#else
++	    UPNP_GetValidIGD(devlist, &handle->urls, &handle->data, std::data(lanaddr), std::size(lanaddr) - 1)
++#endif
++	    == UPNP_IGD_VALID_CONNECTED)
+         {
+             tr_logAddInfo(fmt::format(_("Found Internet Gateway Device '{url}'"), fmt::arg("url", handle->urls.controlURL)));
+             tr_logAddInfo(fmt::format(_("Local Address is '{address}'"), fmt::arg("address", lanaddr.data())));
