@@ -6,34 +6,37 @@
 %bcond_with	qt6		# use Qt6 for Qt GUI
 %bcond_without	systemd		# without systemd unit
 
-%define		qtver	5.6
+%define		qtver	5.15
 
 Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	4.0.6
-Release:	2
+Version:	4.1.0
+Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://github.com/transmission/transmission/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	8132b9f012b8e6309911c80ee9fd00f7
+# Source0-md5:	38a8990b653d5795a7790da7bc0dd70c
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
-Patch0:		%{name}-miniupnpc.patch
 URL:		http://transmissionbt.com/
-BuildRequires:	cmake >= 3.12
+BuildRequires:	cmake >= 3.16.3
+BuildRequires:	crc32c-devel
 BuildRequires:	curl-devel >= 7.28.0
 BuildRequires:	gettext-tools
 %if %{with gtk}
 %if %{with gtk4}
 BuildRequires:	glibmm2.68-devel >= 2.60.0
-BuildRequires:	gtkmm4-devel >= 3.24.0
+BuildRequires:	gtkmm4-devel >= 4.11.1
 %else
 BuildRequires:	glibmm-devel >= 2.60.0
 BuildRequires:	gtkmm3-devel >= 3.24.0
 BuildRequires:	libayatana-appindicator-gtk3-devel
 %endif
+%endif
+%ifnarch %arch_with_atomics64
+BuildRequires:	libatomic-devel
 %endif
 BuildRequires:	libb64-devel
 BuildRequires:	libdeflate-devel >= 1.7
@@ -43,10 +46,10 @@ BuildRequires:	libpsl-devel >= 0.21.1
 BuildRequires:	libstdc++-devel >= 6:5
 BuildRequires:	lsb-release
 BuildRequires:	miniupnpc-devel >= 1.7
-BuildRequires:	openssl-devel >= 0.9.7
+BuildRequires:	openssl-devel >= 1.1.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.742
+BuildRequires:	rpmbuild(macros) >= 2.025
 %{?with_systemd:BuildRequires:	systemd-devel}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xfsprogs-devel
@@ -104,7 +107,7 @@ Requires:	libdeflate >= 1.7
 Requires:	libevent >= 2.1.0
 Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
-Requires:	openssl >= 0.9.7
+Requires:	openssl >= 1.1.0
 
 %description cli
 Transmission has been built from the ground up to be a lightweight,
@@ -152,7 +155,7 @@ Requires:	libdeflate >= 1.7
 Requires:	libevent >= 2.1.0
 Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
-Requires:	openssl >= 0.9.7
+Requires:	openssl >= 1.1.0
 %{?with_systemd:Requires:	systemd-units >= 38}
 Provides:	group(transmission)
 Provides:	user(transmission)
@@ -194,7 +197,7 @@ Requires:	%{name}-common = %{version}-%{release}
 Requires:	curl-libs >= 7.28.0
 %if %{with gtk4}
 Requires:	glibmm2.68 >= 2.60.0
-Requires:	gtkmm4 >= 3.24.0
+Requires:	gtkmm4 >= 4.11.1
 %else
 Requires:	glibmm >= 2.60.0
 Requires:	gtkmm3 >= 3.24.0
@@ -204,7 +207,7 @@ Requires:	libdeflate >= 1.7
 Requires:	libevent >= 2.1.0
 Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
-Requires:	openssl >= 0.9.7
+Requires:	openssl >= 1.1.0
 
 %description gui
 Transmission has been built from the ground up to be a lightweight,
@@ -252,7 +255,7 @@ Requires:	libdeflate >= 1.7
 Requires:	libevent >= 2.1.0
 Requires:	libpsl >= 0.21.1
 Requires:	miniupnpc >= 1.7
-Requires:	openssl >= 0.9.7
+Requires:	openssl >= 1.1.0
 
 %description gui-qt
 A GUI to Transmission based on Qt 5.
@@ -273,20 +276,18 @@ Narzędzia dla klienta BitTorrenta Transmission.
 
 %prep
 %setup -q
-%patch -P0 -p1
 
 %build
-install -d build
-cd build
-%cmake .. \
+%cmake -B build \
 	-DENABLE_CLI:BOOL=ON \
 	%{cmake_on_off gtk ENABLE_GTK} \
 	-DUSE_GTK_VERSION=%{?with_gtk4:4}%{!?with_gtk4:3} \
 	%{cmake_on_off qt ENABLE_QT} \
 	-DUSE_QT_VERSION=%{?with_qt6:6}%{!?with_qt6:5} \
-	%{cmake_on_off systemd ENABLE_SYSTEMD}
+	%{cmake_on_off systemd ENABLE_SYSTEMD} \
+	-DWITH_CRYPTO=openssl
 
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -302,12 +303,11 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 
 %if %{with systemd}
-cp -p daemon/transmission-daemon.service $RPM_BUILD_ROOT%{systemdunitdir}
+%{__rm} $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system/transmission-daemon.service
+cp -p build/daemon/transmission-daemon.service $RPM_BUILD_ROOT%{systemdunitdir}
 %endif
 
 %if %{with gtk}
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ceb,jbo,pt_PT}
-
 %find_lang %{name} --all-name --with-gnome
 %endif
 
@@ -315,6 +315,7 @@ cp -p daemon/transmission-daemon.service $RPM_BUILD_ROOT%{systemdunitdir}
 %find_lang %{name} --with-qm -o %{name}-qt.lang
 %endif
 
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
