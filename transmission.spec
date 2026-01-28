@@ -285,7 +285,8 @@ Narzędzia dla klienta BitTorrenta Transmission.
 	%{cmake_on_off qt ENABLE_QT} \
 	-DUSE_QT_VERSION=%{?with_qt6:6}%{!?with_qt6:5} \
 	%{cmake_on_off systemd ENABLE_SYSTEMD} \
-	-DWITH_CRYPTO=openssl
+	-DWITH_CRYPTO=openssl \
+	-DRUN_CLANG_TIDY=OFF
 
 %{__make} -C build
 
