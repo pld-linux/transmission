@@ -12,12 +12,12 @@ Summary:	A versatile and multi-platform BitTorrent client
 Summary(hu.UTF-8):	Egy sokoldalú és multiplatformos BitTorrent kliens
 Summary(pl.UTF-8):	Wszechstronny i wieloplatformowy klient BitTorrenta
 Name:		transmission
-Version:	4.1.0
+Version:	4.1.1
 Release:	1
 License:	MIT
 Group:		Applications/Communications
 Source0:	https://github.com/transmission/transmission/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	38a8990b653d5795a7790da7bc0dd70c
+# Source0-md5:	6b86f32e309daa267ab4f2e07df52724
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 URL:		http://transmissionbt.com/
@@ -384,9 +384,9 @@ fi
 %attr(755,root,root) %{_bindir}/transmission-gtk
 %{_mandir}/man1/transmission-gtk.1*
 %{_desktopdir}/transmission-gtk.desktop
-%{_iconsdir}/hicolor/scalable/apps/transmission.svg
-%{_iconsdir}/hicolor/scalable/apps/transmission-devel.svg
-%{_iconsdir}/hicolor/symbolic/apps/transmission-symbolic.svg
+%{_iconsdir}/hicolor/scalable/apps/transmission-gtk-devel.svg
+%{_iconsdir}/hicolor/scalable/apps/transmission-gtk.svg
+%{_iconsdir}/hicolor/symbolic/apps/transmission-gtk-symbolic.svg
 %{_datadir}/metainfo/transmission-gtk.metainfo.xml
 %endif
 
@@ -396,6 +396,9 @@ fi
 %attr(755,root,root) %{_bindir}/transmission-qt
 %dir %{_datadir}/%{name}/translations
 %{_desktopdir}/transmission-qt.desktop
+%{_iconsdir}/hicolor/scalable/apps/transmission-qt-devel.svg
+%{_iconsdir}/hicolor/scalable/apps/transmission-qt.svg
+%{_iconsdir}/hicolor/symbolic/apps/transmission-qt-symbolic.svg
 %{_mandir}/man1/transmission-qt.1*
 %endif
 
