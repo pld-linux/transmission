@@ -22,7 +22,6 @@ Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 URL:		http://transmissionbt.com/
 BuildRequires:	cmake >= 3.16.3
-BuildRequires:	crc32c-devel
 BuildRequires:	curl-devel >= 7.28.0
 BuildRequires:	gettext-tools
 %if %{with gtk}
